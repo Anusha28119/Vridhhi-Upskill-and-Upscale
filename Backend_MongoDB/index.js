@@ -8,10 +8,25 @@ const investor = require('./models/Investor');
 const { urlencoded } = require('express');
 const { request } = require('http');
 const newUser = require('./models/newuser');
+const job_provider_main = require('./models/job_provider_main');
+const job_provider_profiles = require('./models/job_provider_profiles');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+//const job_provider_main = require('./models/job_provider_main');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
+app.use(session({secret:'Not a good secret'}));
+
+const requireLogin =(req,res, next) =>{
+    if(!req.session.user_id)
+    {
+        return res.redirect('/login')
+    }
+    next();
+
+}
 
 mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
@@ -20,12 +35,92 @@ mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true 
     console.log(err)
 });
 
+
+app.get('/login', (req,res) => {
+    res.render('users/login')
+})
+
+app.post('/login', async(req,res) => {
+    const{email, password, User} = req.body;
+    console.log(User);
+    if(User == 'seeker'){
+         const user = await seeker.findOne({email});
+         if(user==null)
+         {
+            res.send("Try again")
+         }else{
+         const validPassword= await bcrypt.compare(password, user.password);
+         if(validPassword){
+            req.session.user_id=user._id;
+            res.redirect('/secret')
+          }
+         else{
+           res.redirect('/login')
+          }
+        }
+    }else if( User == 'investor'){
+         const user = await investor.findOne({email});
+         if(user==null)
+         {
+            res.send("Try again")
+         }else{
+         const validPassword= await bcrypt.compare(password, user.password);
+         if(validPassword){
+            req.session.user_id=user._id;
+            res.redirect('/secret')
+        }
+       else{
+         res.redirect('/login')
+        }
+        }
+    }else if(User == 'job_provider'){
+         const user = await job_provider_main.findOne({email});
+         if(user==null)
+         {
+            res.send("Try again")
+         }else{
+         const validPassword= await bcrypt.compare(password, user.password);
+         if(validPassword){
+            req.session.user_id=user._id;
+            res.redirect('/secret')
+        }
+       else{
+         res.redirect('/login')
+        }
+         }
+    }else{
+         const user = await entrepreneur.findOne({email});
+         if(user==null)
+         {
+            res.send("Try again")
+         }else{
+         const validPassword= await bcrypt.compare(password, user.password);
+         if(validPassword){
+            req.session.user_id=user._id;
+            res.redirect('/secret')
+        }
+       else{
+         res.redirect('/login')
+        }
+         }
+    }
+
+})
+
+app.post('/logout', (req,res) => {
+    req.session.user_id=null;
+    res.redirect('/login');
+})
+
+
 app.post('/seekers', async (req,res) => {
+    
+    const hash_pwd = await bcrypt.hash(req.body.password,12);
     const newSeeker = new seeker({
         name: req.body.name,
         phoneNo: req.body.phoneNo,
         email: req.body.email,
-        password: req.body.password,
+        password: hash_pwd,
         tenth: req.body.tenth,
         tenth_org: req.body.tenth_org,
         twelfth: req.body.twelfth,
@@ -39,8 +134,10 @@ app.post('/seekers', async (req,res) => {
         bronze_badge: req.body.silver_badge
     })
     await newSeeker.save()
+    req.session.user_id=newSeeker._id;
     console.log(newSeeker)
-    res.redirect('/newUser')
+    //res.redirect('/newUser')
+    res.send(hash_pwd)
     
 })
 
@@ -48,12 +145,68 @@ app.get('/register/seeker', (req,res) => {
     res.render('users/new_seeker')
 })
 
-app.get('/newUser', async (req,res) => {
-
+app.post('/job_providers', async (req,res) => {
+    const hash_pwd = await bcrypt.hash(req.body.password,12);
+    const newjob_provider_main = new job_provider_main({
+        org_name: req.body.org_name,
+        name: req.body.name,
+        phoneNo: req.body.phoneNo,
+        email: req.body.email,
+        password: hash_pwd,
+        vacancies: req.body.vacancies,
+        job_profiles: req.body.job_profiles,
+        total_compensation: req.body.total_compensation
+    })
+    await newjob_provider_main.save()
+    req.session.user_id=newjob_provider_main._id;
+    console.log(newjob_provider_main)
+    res.redirect('/register/job_provider_profiles')
     
+})
+
+app.get('/register/job_provider', (req,res) => {
+    res.render('users/new_provider_main')
+})
+
+app.post('/job_provider_profiles', async (req,res) => {
+    const newjob_provider_profiles = new job_provider_profiles({
+        org_name: req.body.org_name,
+        job_profile: req.body.job_profile,
+        vacancies: req.body.vacancies,
+        profile_compensation: req.body.profile_compensation,
+        profile_location: req.body.profile_location,
+        brief_overview_of_profile: req.body.brief_overview_of_profile,
+        req_tenth: req.body.req_tenth,
+        req_twelfth: req.body.req_twelfth,
+        req_graduation_degree: req.body.req_graduation_degree,
+        req_post_graduation_degree: req.body.req_post_graduation_degree,
+        gold_required: req.body.gold_required,
+        silver_required: req.body.silver_required,
+        bronze_required: req.body.bronze_required
+
+    })
+    await newjob_provider_profiles.save()
+    req.session.user_id=newjob_provider_profiles._id;
+    console.log(newjob_provider_profiles)
+    res.redirect('/newUser')
+    
+})
+
+app.get('/register/job_provider_profiles', (req,res) => {
+    res.render('users/new_provider_profiles')
+})
+
+app.get('/newUser', requireLogin,async (req,res) => {
+
+
     const users = await newUser.find({})
     res.render('users/index', {users})
     
+})
+
+app.get('/secret',requireLogin,(req,res) => {
+    
+    res.render('users/secret');
 })
 
 app.listen(3000, ()=> {
