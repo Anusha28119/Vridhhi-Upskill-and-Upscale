@@ -4,35 +4,35 @@ const providerProfilesSchema = new mongoose.Schema(
     {
         org_name: {
             type: String,
-            required: true
+            required: false
         },
         job_profile: {
             type: String,
-            required: true
+            required: false
         },
         vacancies: {
             type: Number,
-            required: true,
+            required: false
         },
         profile_compensation: {
             type: Number,
-            required: true
+            required: false
         },
         profile_location: {
             type: String,
-            required: true
+            required: false
         },
         brief_overview_of_profile: {
             type: String,
-            required: true
+            required: false
         },
         req_tenth: {
-            type: Boolean,
-            required: true
+            type: Number,
+            required: false
         },
         req_twelfth: {
-            type: Boolean,
-            required: true
+            type: Number,
+            required: false
         },
         req_graduation_degree: {
             type: String,
@@ -42,7 +42,15 @@ const providerProfilesSchema = new mongoose.Schema(
             type: String,
             required: false
         },
-        badge_required: {
+        gold_required: {
+            type: String,
+            required: false
+        },
+        silver_required: {
+            type: String,
+            required: false
+        },
+        bronze_required: {
             type: String,
             required: false
         }

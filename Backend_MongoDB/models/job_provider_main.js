@@ -4,39 +4,39 @@ const providerMainSchema = new mongoose.Schema(
     {
         org_name: {
             type: String,
-            required: true
+            required: false
         },
         name: {
             type: String,
-            required: true
+            required: false
         },
         phoneNo: {
             type: Number,
-            required: true
+            required: false
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             unique: true
         },
         password: {
             type: String,
-            required: true
+            required: false
         },
         vacancies: {
             type: Number,
-            required: true
+            required: false
         },
         job_profiles: {
             type: String,
             required: false
         },
         total_compensation: {
-            type: Boolean,
-            required: true
+            type: Number,
+            required: false
         }
     }
 )
 
-const providerMain = mongoose.model('seeker',providerMainSchema);
+const providerMain = mongoose.model('job_provider_main',providerMainSchema);
 module.exports = providerMain;
