@@ -4,24 +4,24 @@ const seekerSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true
+            required: false
         },
         phoneNo: {
             type: Number,
-            required: true
+            required: false
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             unique: true
         },
         password: {
             type: String,
-            required: true
+            required: false
         },
         tenth: {
             type: Boolean,
-            required: true
+            required: false
         },
         tenth_org: {
             type: String,
@@ -29,7 +29,7 @@ const seekerSchema = new mongoose.Schema(
         },
         twelfth: {
             type: Boolean,
-            required: true
+            required: false
         },
         twelfth_org: {
             type: String,
@@ -53,15 +53,15 @@ const seekerSchema = new mongoose.Schema(
         },
         gold_badge: {
             type: String,
-            required: true
+            required: false
         },
         silver_badge: {
             type: String,
-            required: true
+            required: false
         },
         bronze_badge: {
             type: String,
-            required: true
+            required: false
         }
 
     }
