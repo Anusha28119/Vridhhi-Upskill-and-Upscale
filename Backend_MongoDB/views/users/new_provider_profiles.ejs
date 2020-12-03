@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+</head>
+
+<body>
+    <h1>Please enter all the profiles available in your organisation!</h1>
+    <form action="/job_provider_profiles" method="POST">
+        <input type="text" name="org_name" id="org_name" placeholder="Enter organisation name"><br/>
+        <input type="text" name="job_profile" id="job_profile" placeholder="Enter job_profile"><br/>
+        <input type="number" name="vacancies" id="vacancies" placeholder="Enter the number of vacancies"><br />
+        <input type="number" name="profile_compensation" id="profile_compensation" placeholder="Enter the profile compensation"><br />
+        <input type="text" name="profile_location" id="profile_location" placeholder="Enter the profile location"><br />
+ 
+        <input type="text" name="brief_overview_of_profile" id="brief_overview_of_profile" placeholder="Enter the brief overview of profile"><br />
+        
+        Should the candidate be 10th pass?<br/>
+        <input type="number" name="req_tenth" id="req_tenth" placeholder="Enter 0 for no and 1 for yes"><br />
+
+        Should the candidate be 12th pass?<br/>
+        <input type="number" name="req_twelfth" id="req_twelfth" placeholder="Enter 0 for no and 1 for yes"><br />
+
+        Entire the required graduation degree(if any)<br />
+        <select name="dropdown">
+            <option value="B. Tech" selected>B. Tech</option>
+            <option value="BBA">BBA</option>
+            <option value="B. Sc">B. Sc</option>
+            <option value="MBBS">M.B.B.S.</option>
+            <option value="B. Com">B. Com</option>
+            <option value="B. Arch">B. Arch</option>
+            <option value="other">Others</option>
+            <option value="none">None</option>
+        </select><br />
+               
+        Entire the required post graduation degree(if any)<br />
+        <select name="dropdown">
+            <option value="M. Tech" selected>M. Tech</option>
+            <option value="MBA">MBA</option>
+            <option value="M. Sc">M. Sc</option>
+            <option value="MD">M.D.</option>
+            <option value="M. Com">M. Com</option>
+            <option value="M. Arch">M. Arch</option>
+            <option value="other">Others</option>
+            <option value="none">None</option>
+        </select><br />
+        
+        Entire the required badge(if any)<br/>  
+        
+        Gold Badges : <br />
+        <select name="dropdown">
+            <option value="Embroidery" selected>Embroidery</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="Java">Java</option>
+            <option value="Accounts">Accounts</option>
+            <option value="Finance">Finance</option>
+            <option value="other">Others</option>
+            <option value="none">None</option>
+        </select><br />
+
+        Silver Badges : <br />
+        <select name="dropdown">
+            <option value="Embroidery" selected>Embroidery</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="Java">Java</option>
+            <option value="Accounts">Accounts</option>
+            <option value="Finance">Finance</option>
+            <option value="other">Others</option>
+            <option value="none">None</option>
+        </select><br />
+
+        Bronze Badges : <br />
+        <select name="dropdown">
+            <option value="Embroidery" selected>Embroidery</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="Java">Java</option>
+            <option value="Accounts">Accounts</option>
+            <option value="Finance">Finance</option>
+            <option value="other">Others</option>
+            <option value="none">None</option>
+        </select><br />
+
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+
+</body>
+</html>
