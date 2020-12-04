@@ -303,6 +303,7 @@ app.get('/view/entrepreneurs', async (req, res) => {
     const users = await dbo
     console.log(users)
     res.render('users/index', { users })
+})
 
 app.get('/secret',requireLogin,(req,res) => {
     
