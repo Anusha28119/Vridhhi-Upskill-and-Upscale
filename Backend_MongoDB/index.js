@@ -137,8 +137,8 @@ app.post('/seekers', async (req,res) => {
     await newSeeker.save()
     req.session.user_id=newSeeker._id;
     console.log(newSeeker)
-    //res.redirect('/newUser')
-    res.send(hash_pwd)
+    res.redirect('/newUser')
+
     
 })
 

@@ -4,66 +4,66 @@ const entrepreneurSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true
+            required: false
         },
         phoneNo: {
             type: Number,
-            required: true
+            required: false
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             unique: true
         },
         password: {
             type: String,
-            required: true
+            required: false
         },
         venture_name: {
             type:String,
-            required:true
+            required:false
         },
         team_leader: {
             type:String,
-            required:true
+            required:false
         },
         brief_idea_overview:{
             type:String,
-            required:true
+            required:false
         },
         funding_required: {
             type: Number,
-            required: true
+            required: false
         },
         category: {
             type: String,
-            required: true,
+            required: false,
             lowercase: true,
             enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
         },
         start_date_of_venture: {
             type: Date,
-            required: true
+            required: false
         },
         current_number_of_employees: {
             type: Number,
-            required: true
+            required: false
         },
         working_location:{
             type:String,
-            required:true
+            required:false
         },
         idea_phase:{
             type:Boolean,
-            required:true
+            required:false
         },
         current_annual_turnover:{
             type:Number,
-            required:true
+            required:false
         },
         job_provider:{
             type:Boolean,
-            required:true
+            required:false
         }
 
 
