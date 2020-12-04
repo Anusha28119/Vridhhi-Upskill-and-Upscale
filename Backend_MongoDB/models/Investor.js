@@ -4,42 +4,42 @@ const investorSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true
+            required: false
         },
         phoneNo: {
             type: Number,
-            required: true
+            required: false
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             unique: true
         },
         password: {
             type: String,
-            required: true
+            required: false
         },
         investment_budget: {
             type:Number,
-            required:true
+            required:false
         },
         expected_return: {
             type:Number,
-            required:true
+            required:false
         },
         profit_sharing:{
             type:Boolean,
-            required:true
+            required:false
         },
         preferred_field_first: {
             type: String,
-            required: true,
+            required: false,
             lowercase: true,
             enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
         },
         preferred_field_second: {
             type: String,
-            required: true,
+            required: false,
             lowercase: true,
             enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
         },
