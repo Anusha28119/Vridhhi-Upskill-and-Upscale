@@ -5,11 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 </head>
 
 <body>
     <h1>Register as a Job Provider Today!</h1>
     <form action="/job_providers" method="POST">
+        <div class="form-group">
         <input type="text" name="org_name" id="org_name" placeholder="Enter organisation name"><br/>
         <input type="text" name="name" id="name" placeholder="Enter full name"><br/>
         <input type="number" name="phone" id="phone" placeholder="Enter mobile number"><br />
@@ -21,6 +28,7 @@
         <input type="number" name="total_compensation" id="total_compensation" placeholder="Enter the total compensation going to be offered by your organisation"><br />
         </textarea><br />
         <input type="submit" name="submit" value="Submit" />
+        </div>
     </form>
 
 </body>
