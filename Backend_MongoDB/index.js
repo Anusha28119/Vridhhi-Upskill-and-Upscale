@@ -10,6 +10,7 @@ const { request } = require('http');
 const newUser = require('./models/newuser');
 const job_provider_main = require('./models/job_provider_main');
 const job_provider_profiles = require('./models/job_provider_profiles');
+const { db } = require('./models/seeker');
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -154,6 +155,46 @@ app.get('/newUser', async (req,res) => {
     const users = await newUser.find({})
     res.render('users/index', {users})
     
+})
+
+app.get('/view/seekers', async (req, res) => {
+
+
+    const dbo = seeker.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_seeker', { users })
+
+})
+
+app.get('/view/investors', async (req, res) => {
+
+
+    const dbo = investor.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_investor', { users })
+
+})
+
+app.get('/view/job-providers', async (req, res) => {
+
+
+    const dbo = job_provider_profiles.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/index', { users })
+
+})
+
+app.get('/view/entrepreneurs', async (req, res) => {
+
+
+    const dbo = entrepreneur.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/index', { users })
+
 })
 
 app.listen(3000, ()=> {

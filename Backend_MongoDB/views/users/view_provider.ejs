@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Entrepreneurs</title>
+</head>
+
+<body>
+    <h1>All Entrepreneurs</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Phone No.</th>
+            <th>Email Address</th>
+            <th>Name of Venture</th>
+            <th>Funding Required</th>
+            <th>Category</th>
+            <th>Start Date</th>
+            <th>No. of Employees</th>
+            <th>Location</th>
+            <th>Annual Turnover</th>
+
+
+        </tr>
+        <% for (let user of users) {%>
+
+        <tr>
+            <td><%= user.name %></td>
+            <td><%= user.phoneNo %></td>
+            <td><%= user.email %></td>
+            <td><%= user.venture_name %></td>
+            <td><%= user.funding_required %></td>
+            <td><%= user.category %></td>
+            <td><%= user.start_date_of_venture %></td>
+            <td><%= user.current_number_of_employees %></td>
+            <td><%= user.working_location %></td>
+            <td><%= user.current_annual_turnover %></td>
+
+        </tr>
+        <% }%>
+    </table>
+</body>
+
+</html>
