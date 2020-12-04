@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrepreneur Registration</title>
+</head>
+
+<body>
+    <h1>Register as an Entrepreneur Today!</h1>
+    <form action="/entrepreneurs" method="POST">
+        <input type="text" name="name" id="name" placeholder="Enter full name"><br />
+        <input type="number" name="phone" id="phone" placeholder="Enter mobile number"><br />
+        <input type="email" name="email" id="email" placeholder="Enter email address"><br />
+        <input type="password" name="password" id="password" placeholder="Enter password"><br />
+        <input type="text" name="venture_name" id="venture_name" placeholder="Enter the name of your venture/product"><br />
+        <input type="text" name="leader_name" id="leader_name" placeholder="Enter the team leader's full name"><br />
+        Brief Idea Overview : <br />
+        <textarea rows="5" cols="50" name="idea_overview">
+                            Enter a brief description of your business idea
+        </textarea><br />
+        <input type="number" name="funding_reqd" id="funding_reqd" placeholder="Enter in rupees the funding required by your organisation"><br />
+        Enter a category for your venture<br />
+        <select name="dropdown">
+            <option value="science and technology" selected>Science and Technology</option>
+            <option value="arts">Arts</option>
+            <option value="social entrepreneurship">Social Entrepreneurship</option>
+            <option value="women empowerment">Women Empowerment</option>
+            <option value="education">Education</option>
+            <option value="health sector">Health and Wellness</option>
+            <option value="safety">Safety</option>
+        </select><br />
+        <input type="date" name="startdate" id="startdate" placeholder="Enter the starting date of your venture"><br />
+        <input type="number" name="employee_count" id="employee_count" placeholder="Enter the current no. of employees in your venture"><br />
+        <input type="text" name="working_location" id="working_location" placeholder="Enter your working location"><br />
+
+        Is your project currently in the ideation phase?<br />
+        <input type="radio" name="idea_phase" id="idea_phase" value="yes">Yes<br />
+        <input type="radio" name="idea_phase" id="idea_phase" value="no">No<br />
+
+        <input type="number" name="annual_turnover" id="annual_turnover" placeholder="Enter the current annual turnover (in rupees) of your venture"><br />
+
+        Are you also a job provider<br />
+        <input type="radio" name="job_provider" id="job_provider" value="yes">Yes<br />
+        <input type="radio" name="job_provider" id="job_provider" value="no">No<br />
+        
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+
+</body>
+
+</html>
