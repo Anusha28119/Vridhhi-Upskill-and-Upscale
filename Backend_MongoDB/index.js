@@ -14,6 +14,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 //const job_provider_main = require('./models/job_provider_main');
 
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
@@ -141,8 +142,62 @@ app.post('/seekers', async (req,res) => {
     
 })
 
+app.post('/entrepreneurs', async (req, res) => {
+    const hash_pwd = await bcrypt.hash(req.body.password,12);
+    const newEntrepreneur = new entrepreneur({
+        name: req.body.name,
+        phoneNo: req.body.phoneNo,
+        email: req.body.email,
+        password: hash_pwd,
+        venture_name: req.body.venture_name,
+        team_leader: req.body.team_leader,
+        brief_idea_overview: req.body.brief_idea_overview,
+        funding_required: req.body.funding_required,
+        category: req.body.category,
+        start_date_of_venture: req.body.start_date_of_venture,
+        current_number_of_employees: req.body.current_number_of_employees,
+        working_location: req.body.working_location,
+        idea_phase: req.body.idea_phase,
+        current_annual_turnover: req.body.current_annual_turnover,
+        job_provider: req.body.job_provider
+    })
+    await newEntrepreneur.save()
+    req.session.user_id=newEntrepreneur._id;
+    console.log(newEntrepreneur)
+    res.redirect('/newUser')
+})
+
+app.post('/investors', async (req, res) => {
+    const hash_pwd = await bcrypt.hash(req.body.password,12);
+    const newInvestor = new investor({
+        name: req.body.name,
+        phoneNo: req.body.phoneNo,
+        email: req.body.email,
+        password: hash_pwd,
+        investment_budget: req.body.investment_budget,
+        expected_return: req.body.expected_return,
+        profit_sharing: req.body.profit_sharing,
+        preferred_field_first: req.body.preferred_field_first,
+        preferred_field_second: req.body.preferred_field_second,
+        preferred_qualification: req.body.preferred_qualification
+    })
+    await newInvestor.save()
+    req.session.user_id=newInvestor._id;
+    console.log(newInvestor)
+    res.redirect('/newUser')
+})
+
 app.get('/register/seeker', (req,res) => {
     res.render('users/new_seeker')
+})
+
+
+app.get('/register/entrepreneur', (req, res) => {
+    res.render('users/new_entrepreneur')
+})
+
+app.get('/register/investor', (req, res) => {
+    res.render('users/new_investor')
 })
 
 app.post('/job_providers', async (req,res) => {
@@ -167,6 +222,12 @@ app.post('/job_providers', async (req,res) => {
 app.get('/register/job_provider', (req,res) => {
     res.render('users/new_provider_main')
 })
+
+
+app.get('/register/job_provider_profiles', (req,res) => {
+    res.render('users/new_provider_profiles')
+})
+
 
 app.post('/job_provider_profiles', async (req,res) => {
     const newjob_provider_profiles = new job_provider_profiles({
