@@ -266,7 +266,7 @@ app.get('/newUser', requireLogin,async (req,res) => {
     
 })
 
-app.get('/view/seekers', async (req, res) => {
+app.get('/view/seekers', requireLogin,async (req, res) => {
 
 
     const dbo = seeker.find({})
@@ -276,7 +276,7 @@ app.get('/view/seekers', async (req, res) => {
 
 })
 
-app.get('/view/investors', async (req, res) => {
+app.get('/view/investors', requireLogin, async (req, res) => {
 
 
     const dbo = investor.find({})
@@ -286,17 +286,17 @@ app.get('/view/investors', async (req, res) => {
 
 })
 
-app.get('/view/job-providers', async (req, res) => {
+app.get('/view/job-providers', requireLogin, async (req, res) => {
 
 
     const dbo = job_provider_profiles.find({})
     const users = await dbo
     console.log(users)
-    res.render('users/index', { users })
+    res.render('users/view_provider', { users })
 
 })
 
-app.get('/view/entrepreneurs', async (req, res) => {
+app.get('/view/entrepreneurs', requireLogin, async (req, res) => {
 
 
     const dbo = entrepreneur.find({})
