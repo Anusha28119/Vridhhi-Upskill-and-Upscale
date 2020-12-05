@@ -16,20 +16,34 @@
 <body>
     <h1>Register as an Entrepreneur Today!</h1>
     <form action="/entrepreneurs" method="POST">
-        <div class="form-group">
-        <input type="text" name="name" id="name" placeholder="Enter full name"><br />
-        <input type="number" name="phone" id="phone" placeholder="Enter mobile number"><br />
-        <input type="email" name="email" id="email" placeholder="Enter email address"><br />
-        <input type="password" name="password" id="password" placeholder="Enter password"><br />
-        <input type="text" name="venture_name" id="venture_name" placeholder="Enter the name of your venture/product"><br />
-        <input type="text" name="leader_name" id="leader_name" placeholder="Enter the team leader's full name"><br />
-        Brief Idea Overview : <br />
-        <textarea rows="5" cols="50" name="idea_overview">
-                            Enter a brief description of your business idea
+        <div class="form-group">   
+        <label for="name">Enter full name</label>
+        <input type="text" name="name" id="name"><br />
+
+        <label for="phoneNo">Enter mobile number</label>
+        <input type="number" name="phoneNo" id="phoneNo"><br />
+
+        <label for="email">Enter email address (abc@example.com)</label>
+        <input type="email" name="email" id="email"><br />
+
+        <label for="password">Enter password</label>
+        <input type="password" name="password" id="password"><br />
+
+        <label for="venture_name">Enter the name of your venture/organisation/product</label>
+        <input type="text" name="venture_name" id="venture_name"><br />
+
+        <label for="team_leader">Enter the team leader's full name</label>
+        <input type="text" name="team_leader" id="team_leader"><br />
+
+        <label for="brief_idea_overview">Brief Idea Overview : </label><br />
+        <textarea rows="5" cols="50" name="brief_idea_overview" id="brief_idea_overview">
         </textarea><br />
-        <input type="number" name="funding_reqd" id="funding_reqd" placeholder="Enter in rupees the funding required by your organisation"><br />
-        Enter a category for your venture<br />
-        <select name="dropdown">
+
+        <label for="funding_required">Enter in rupees the funding required by your organisation</label>
+        <input type="number" name="funding_required" id="funding_required"><br />
+
+        <label for="category">Enter a category for your venture</label><br />
+        <select name="category" id="category">
             <option value="science and technology" selected>Science and Technology</option>
             <option value="arts">Arts</option>
             <option value="social entrepreneurship">Social Entrepreneurship</option>
@@ -37,18 +51,26 @@
             <option value="education">Education</option>
             <option value="health sector">Health and Wellness</option>
             <option value="safety">Safety</option>
+            <option value="other">Others</option>
         </select><br />
-        <input type="date" name="startdate" id="startdate" placeholder="Enter the starting date of your venture"><br />
-        <input type="number" name="employee_count" id="employee_count" placeholder="Enter the current no. of employees in your venture"><br />
-        <input type="text" name="working_location" id="working_location" placeholder="Enter your working location"><br />
 
-        Is your project currently in the ideation phase?<br />
+        <label for="start_date_of_venture">Enter the starting date of your venture</label>
+        <input type="date" name="start_date_of_venture" id="start_date_of_venture"><br />
+
+        <label for="current_number_of_employees">Enter the current no. of employees in your venture</label>
+        <input type="number" name="current_number_of_employees" id="current_number_of_employees"><br />
+
+        <label for="working_location">"Enter your working location</label>
+        <input type="text" name="working_location" id="working_location"><br />
+
+        <label for="idea_phase">Is your project currently in the ideation phase?</label><br />
         <input type="radio" name="idea_phase" id="idea_phase" value="yes">Yes<br />
         <input type="radio" name="idea_phase" id="idea_phase" value="no">No<br />
 
-        <input type="number" name="annual_turnover" id="annual_turnover" placeholder="Enter the current annual turnover (in rupees) of your venture"><br />
+        <label for="current_annual_turnover">Enter the current annual turnover (in rupees) of your venture (Enter 0 if still in ideation phase)</label>
+        <input type="number" name="current_annual_turnover" id="current_annual_turnover"><br />
 
-        Are you also a job provider<br />
+        <label for="job_provider">Are you also a job provider</label><br />
         <input type="radio" name="job_provider" id="job_provider" value="yes">Yes<br />
         <input type="radio" name="job_provider" id="job_provider" value="no">No<br />
         

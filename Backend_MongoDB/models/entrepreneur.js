@@ -39,7 +39,7 @@ const entrepreneurSchema = new mongoose.Schema(
             type: String,
             required: false,
             lowercase: true,
-            enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
+            enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety','other']
         },
         start_date_of_venture: {
             type: Date,

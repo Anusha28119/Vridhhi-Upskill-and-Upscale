@@ -23,9 +23,9 @@
             <th>Passed class 12?</th>
             <th>Graduate</th>
             <th>Post-graduate?</th>
-            <th>Gold badges?</th>
+            <!-- <th>Gold badges?</th>
             <th>Silver badges?</th>
-            <th>Bronze badges?</th>
+            <th>Bronze badges?</th> -->
 
 
         </tr>
@@ -35,13 +35,13 @@
             <td><%= user.name %></td>
             <td><%= user.phoneNo %></td>
             <td><%= user.email %></td>
-            <td><%= user.tenth %></td>
-            <td><%= user.twelfth%></td>
-            <td><%= user.graduation_degree %></td>
-            <td><%= user.post_graduation_degree %></td>
-            <td><%= user.gold_badge %></td>
-            <td><%= user.silver_badge %></td>
-            <td><%= user.bronze_badge %></td>
+            <td><a href="/seekers?tenth=<%= user.tenth %>"><%= user.tenth %></a></td>
+            <td><a href="/seekers1?twelfth=<%= user.twelfth%>"><%= user.twelfth%></a></td>
+            <td><a href="/seekers2?graduation=<%= user.graduation %>"><%= user.graduation %></a></td>
+            <td><a href="/seekers3?post_graduation=<%= user.post_graduation %>"><%= user.post_graduation %></a></td>
+            <!-- <td><a href="/seekers4?gold=<%= user.gold_badge %>"><%= user.gold_badge %></a></td>
+            <td><a href="/seekers5?silver=<%= user.silver_badge %>"><%= user.silver_badge %></a></td>
+            <td><a href="/seekers6?bronze=<%= user.bronze_badge %>"><%= user.bronze_badge %></a></td> -->
 
         </tr>
         <% }%>

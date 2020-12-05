@@ -17,22 +17,38 @@
     <h1>Please enter all the profiles available in your organisation!</h1>
     <form action="/job_provider_profiles" method="POST">
         <div class="form-group">
-        <input type="text" name="org_name" id="org_name" placeholder="Enter organisation name"><br/>
-        <input type="text" name="job_profile" id="job_profile" placeholder="Enter job_profile"><br/>
+
+        <label for="org_name">Enter organisation name</label>
+        <input type="text" name="org_name" id="org_name"><br/>
+
+        <label for="job_profile">Enter job_profile</label>
+        <input type="text" name="job_profile" id="job_profile"><br/>
+
+        <label for="vacancies">Enter the number of vacancies</label>
         <input type="number" name="vacancies" id="vacancies" placeholder="Enter the number of vacancies"><br />
-        <input type="number" name="profile_compensation" id="profile_compensation" placeholder="Enter the profile compensation"><br />
-        <input type="text" name="profile_location" id="profile_location" placeholder="Enter the profile location"><br />
+
+        <label for="profile_compensation">Enter the profile compensation (in rupees)</label>
+        <input type="number" name="profile_compensation" id="profile_compensation"><br />
+
+        <label for="profile_location">Enter the profile location</label>
+        <input type="text" name="profile_location" id="profile_location"><br />
  
-        <input type="text" name="brief_overview_of_profile" id="brief_overview_of_profile" placeholder="Enter the brief overview of profile"><br />
+        <label for="brief_overview_of_profile">Enter the brief overview of profile</label>
+        <input type="text" name="brief_overview_of_profile" id="brief_overview_of_profile"><br />
         
-        Should the candidate be 10th pass?<br/>
-        <input type="number" name="req_tenth" id="req_tenth" placeholder="Enter 0 for no and 1 for yes"><br />
+        <label for="req_tenth">Should the candidate be 10th pass?</label><br />
+       
+        <input type="radio" name="req_tenth" id="req_tenth" value="yes">Yes<br />
+        <input type="radio" name="req_tenth" id="req_tenth" value="no">No<br />
 
-        Should the candidate be 12th pass?<br/>
-        <input type="number" name="req_twelfth" id="req_twelfth" placeholder="Enter 0 for no and 1 for yes"><br />
+        <label for="req_twelfth">Should the candidate be 12th pass?</label><br />
+        
+        <input type="radio" name="req_twelfth" id="req_twelfth" value="yes">Yes<br />
+        <input type="radio" name="req_twelfth" id="req_twelfth" value="no">No<br />
 
-        Entire the required graduation degree(if any)<br />
-        <select name="dropdown">
+        <label for="req_graduation_degree">Entire the required graduation degree(if any)<br /></label>
+        
+        <select name="req_graduation_degree" id="req_graduation_degree">
             <option value="B. Tech" selected>B. Tech</option>
             <option value="BBA">BBA</option>
             <option value="B. Sc">B. Sc</option>
@@ -43,8 +59,9 @@
             <option value="none">None</option>
         </select><br />
                
-        Entire the required post graduation degree(if any)<br />
-        <select name="dropdown">
+        <label for="req_post_graduation_degree">Entire the required post graduation degree(if any)<br /></label>
+        
+        <select name="req_post_graduation_degree" id="req_post_graduation_degree">
             <option value="M. Tech" selected>M. Tech</option>
             <option value="MBA">MBA</option>
             <option value="M. Sc">M. Sc</option>
@@ -55,7 +72,7 @@
             <option value="none">None</option>
         </select><br />
         
-        Entire the required badge(if any)<br/>  
+        <!-- Entire the required badge(if any)<br/>  
         
         Gold Badges : <br />
         <select name="dropdown">
@@ -91,7 +108,7 @@
             <option value="Finance">Finance</option>
             <option value="other">Others</option>
             <option value="none">None</option>
-        </select><br />
+        </select><br /> -->
 
         <input type="submit" name="submit" value="Submit" />
         </div>

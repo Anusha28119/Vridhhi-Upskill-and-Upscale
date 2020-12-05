@@ -17,15 +17,29 @@
     <h1>Register as a Job Provider Today!</h1>
     <form action="/job_providers" method="POST">
         <div class="form-group">
-        <input type="text" name="org_name" id="org_name" placeholder="Enter organisation name"><br/>
-        <input type="text" name="name" id="name" placeholder="Enter full name"><br/>
-        <input type="number" name="phone" id="phone" placeholder="Enter mobile number"><br />
-        <input type="email" name="email" id="email" placeholder="Enter email address"><br />
-        <input type="password" name="password" id="password" placeholder="Enter password"><br />
+        <label for="org_name">Enter organisation name</label>
+        <input type="text" name="org_name" id="org_name"><br/>
+
+        <label for="name">Enter full name</label>
+        <input type="text" name="name" id="name"><br/>
+
+        <label for="phoneNo">Enter mobile number</label>
+        <input type="number" name="phoneNo" id="phoneNo"><br />
+
+        <label for="email">Enter email address</label>
+        <input type="email" name="email" id="email"><br />
+
+        <label for="password">Enter password</label>
+        <input type="password" name="password" id="password"><br />
  
-        <input type="text" name="vacancies" id="vacancies" placeholder="Enter the number of vacancies in your organisation"><br />
-        <input type="text" name="job_profiles" id="job_profiles" placeholder="Enter the job_profiles available in your organisation"><br />
-        <input type="number" name="total_compensation" id="total_compensation" placeholder="Enter the total compensation going to be offered by your organisation"><br />
+        <label for="vacancies">Enter the number of vacancies in your organisation</label>
+        <input type="text" name="vacancies" id="vacancies"><br />
+
+        <label for="job_profiles">Enter the job_profiles available in your organisation</label>
+        <input type="text" name="job_profiles" id="job_profiles"><br />
+
+        <label for="total_compensation">Enter the total compensation going to be offered by your organisation</label>
+        <input type="number" name="total_compensation" id="total_compensation"><br />
         </textarea><br />
         <input type="submit" name="submit" value="Submit" />
         </div>

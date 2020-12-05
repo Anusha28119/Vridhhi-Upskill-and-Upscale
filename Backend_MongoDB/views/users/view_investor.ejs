@@ -37,10 +37,10 @@
             <td><%= user.email %></td>
             <td><%= user.investment_budget %></td>
             <td><%= user.expected_return %></td>
-            <td><%= user.profit_sharing %></td>
-            <td><%= user.preferred_field_first %></td>
-            <td><%= user.preferred_field_second %></td>
-            <td><%= user.preferred_qualification %></td>
+            <td><a href="/investors1?profit_sharing=<%= user.profit_sharing %>"><%= user.profit_sharing %></a></td>
+            <td><a href="/investors2?preferred_field_first=<%= user.preferred_field_first %>"><%= user.preferred_field_first %></a></td>
+            <td><a href="/investors3?preferred_field_second=<%= user.preferred_field_second %>"><%= user.preferred_field_second %></a></td>
+            <td><a href="/investors4?preferred_qualification=<%= user.preferred_qualification %>"><%= user.preferred_qualification %></a></td>
 
         </tr>
         <% }%>

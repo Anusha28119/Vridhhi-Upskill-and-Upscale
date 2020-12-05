@@ -7,7 +7,7 @@ const seekerSchema = new mongoose.Schema(
             required: false
         },
         phoneNo: {
-            type: Number,
+            type: String,
             required: false
         },
         email: {
@@ -35,12 +35,20 @@ const seekerSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        graduation: {
+            type: Boolean,
+            required: false
+        },
         graduation_degree: {
             type: String,
             required: false
         },
         graduation_org: {
             type: String,
+            required: false
+        },
+        post_graduation: {
+            type: Boolean,
             required: false
         },
         post_graduation_degree: {

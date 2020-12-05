@@ -27,11 +27,11 @@ const providerProfilesSchema = new mongoose.Schema(
             required: false
         },
         req_tenth: {
-            type: Number,
+            type: Boolean,
             required: false
         },
         req_twelfth: {
-            type: Number,
+            type: Boolean,
             required: false
         },
         req_graduation_degree: {
