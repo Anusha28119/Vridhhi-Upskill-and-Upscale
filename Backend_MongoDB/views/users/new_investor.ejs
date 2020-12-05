@@ -17,18 +17,31 @@
     <h1>Register as an Investor Today!</h1>
     <form action="/investors" method="POST">
         <div class="form-group">
-        <input type="text" name="name" id="name" placeholder="Enter full name"><br />
-        <input type="number" name="phone" id="phone" placeholder="Enter mobile number"><br />
-        <input type="email" name="email" id="email" placeholder="Enter email address"><br />
-        <input type="password" name="password" id="password" placeholder="Enter password"><br />
-        <input type="number" name="investment_budget" id="investment_budget" placeholder="Enter your investment budget(in rupees"><br />
-        <input type="number" name="expected_return" id="expected_return" placeholder="Enter your expected return(in rupees)"><br />
 
-        Is profit sharing involved?<br />
+        <label for="name">Enter full name</label>
+        <input type="text" name="name" id="name"><br />
+
+        <label for="phoneNo">Enter mobile number</label>
+        <input type="number" name="phoneNo" id="phoneNo"><br />
+
+        <label for="email">Enter email address (abc@example.com)</label>
+        <input type="email" name="email" id="email"><br />
+
+        <label for="password">Enter password</label>
+        <input type="password" name="password" id="password"><br />
+
+        <label for="investment_budget">Enter your investment budget(in rupees)</label>
+        <input type="number" name="investment_budget" id="investment_budget"><br />
+
+        <label for="expected_return">Enter your expected return(in rupees)</label>
+        <input type="number" name="expected_return" id="expected_return"><br />
+
+        <label for="profit_sharing">Is profit sharing involved?</label><br />
         <input type="radio" name="profit_sharing" id="profit_sharing" value="yes">Yes<br />
         <input type="radio" name="profit_sharing" id="profit_sharing" value="no">No<br />
-        Enter first preferred domain of investment<br />
-        <select name="dropdown">
+
+        <label for="preferred_field_first">Enter first preferred domain of investment</label><br />
+        <select class="select-picker" name="preferred_field_first" id="preferred_field_first">
             <option value="science and technology" selected>Science and Technology</option>
             <option value="arts">Arts</option>
             <option value="social entrepreneurship">Social Entrepreneurship</option>
@@ -36,10 +49,11 @@
             <option value="education">Education</option>
             <option value="health sector">Health and Wellness</option>
             <option value="safety">Safety</option>
+            <option value="others">Others</option>
         </select><br />
 
-        Enter second preferred domain of investment<br />
-        <select name="dropdown">
+        <label for="preferred_field_second">Enter second preferred domain of investment</label><br />
+        <select class="select-picker" name="preferred_field_second" id="preferred_field_second">
             <option value="science and technology" selected>Science and Technology</option>
             <option value="arts">Arts</option>
             <option value="social entrepreneurship">Social Entrepreneurship</option>
@@ -47,10 +61,11 @@
             <option value="education">Education</option>
             <option value="health sector">Health and Wellness</option>
             <option value="safety">Safety</option>
+            <option value="others">Others</option>
         </select><br />
 
-        Enter preferred graduation qualification<br />
-        <select name="dropdown">
+        <label for="preferred_qualification">Enter preferred graduation qualification</label><br />
+        <select class="select-picker" name="preferred_qualification" id="preferred_qualification" >
             <option value="B. Tech" selected>B. Tech</option>
             <option value="BBA">BBA</option>
             <option value="B. Sc">B. Sc</option>

@@ -35,19 +35,18 @@ const investorSchema = new mongoose.Schema(
             type: String,
             required: false,
             lowercase: true,
-            enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
+            // enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
         },
         preferred_field_second: {
             type: String,
             required: false,
             lowercase: true,
-            enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
+            // enum:['science and technology','arts','social entrepreneurship','women empowerment','education','health sector','safety']
         },
         preferred_qualification: {
             type: String,
             required: false,
             lowercase: true,
-            enum: ['b.tech', 'b.sc','bba', 'mbbs','md','b.com','mba','b.arch']
         }
 
 
