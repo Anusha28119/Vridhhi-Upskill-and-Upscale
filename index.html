@@ -191,7 +191,7 @@
             <div class="top-content">
               <h6>Log in to your free account and <em>get immediate</em> access to all our services</h6>
             </div>
-            <form id="contact" action="" method="get">
+            <form id="contact" action="/login" method="POST">
               <div class="row">
                 <div class="col-md-12">
                   <fieldset>
@@ -201,6 +201,18 @@
                 <div class="col-md-12">
                   <fieldset>
                     <input name="phone-number" type="text" class="form-control" id="phone-number" placeholder="Your Password" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-12">
+                  <fieldset>
+                    Enter the User Type<br/>
+                    <select name="User">
+                      <option value="seeker" selected>seeker</option>
+                      <option value="job_provider">job_provider</option>
+                      <option value="entrepreneur">entrepreneur</option>
+                      <option value="investor">investor</option>
+                  </select><br />
+
                   </fieldset>
                 </div>
                 <div class="col-md-12">

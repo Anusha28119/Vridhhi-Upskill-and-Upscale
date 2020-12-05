@@ -13,6 +13,8 @@ const job_provider_profiles = require('./models/job_provider_profiles');
 const { db } = require('./models/seeker');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+
+
 //const job_provider_main = require('./models/job_provider_main');
 
 
@@ -42,6 +44,22 @@ app.get('/login', (req,res) => {
     res.render('users/login')
 })
 
+app.get('/myprofile_seeker',requireLogin,(req,res) => {
+    
+    //const {user}=req.params;
+    res.render('users/myprofile_seeker');
+})
+
+
+app.get('/profile', function(req, res, next) {
+
+    //here it is
+    var user = req.user;
+
+    //you probably also want to pass this to your view
+    res.render('users/myprofile_seeker', { title: 'profile', user: user });
+});
+
 app.post('/login', async(req,res) => {
     const{email, password, User} = req.body;
     console.log(User);
@@ -54,7 +72,25 @@ app.post('/login', async(req,res) => {
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
             req.session.user_id=user._id;
-            res.redirect('/secret')
+            //res.send(user);
+            console.log(user);
+            global.User_profile=user;
+
+            const users = await seeker.findOne({email});
+            console.log(users);
+            res.render('users/profile', {users:users});
+                //var userr = req.user;
+                //userr._id = encrypt(userr._id);
+                //res.render('users/myprofile_seeker', {
+                  //  user: userr
+                //});
+            
+            
+            //res.redirect('/myprofile_seeker');
+            //var user = req.user;
+
+    //you probably also want to pass this to your view
+          //res.render('users/myprofile_seeker', { title: 'profile', user: user });
           }
          else{
            res.redirect('/login')
@@ -307,7 +343,8 @@ app.get('/view/entrepreneurs', requireLogin, async (req, res) => {
 
 app.get('/secret',requireLogin,(req,res) => {
     
-    res.render('users/secret');
+    //const {user}=req.params;
+    res.render('users/secret',user);
 })
 
 app.listen(3000, ()=> {

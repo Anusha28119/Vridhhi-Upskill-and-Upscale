@@ -12,7 +12,7 @@ const seekers = [
     {
     name: "Aditi Khandelwal",
     phoneNo: 980980990,
-    email: "aditi@hotmail.com",
+    email: "aditii@hotmail.com",
     password: "aditi/!",
     tenth: true,
     tenth_org: "DPS Noida",
