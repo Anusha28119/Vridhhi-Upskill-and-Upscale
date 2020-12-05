@@ -83,7 +83,7 @@ app.post('/login', async(req,res) => {
 
             const users = await seeker.findOne({email});
             console.log(users);
-            res.render('users/profile', {users:users});
+            res.render('users/profile_seeker', {users:users});
                 //var userr = req.user;
                 //userr._id = encrypt(userr._id);
                 //res.render('users/myprofile_seeker', {

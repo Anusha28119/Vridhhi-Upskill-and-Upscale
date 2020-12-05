@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const seeker = require('./models/seeker');
 
-mongoose.connect('mongodb://localhost/Vriddhi_seeker', { useNewUrlParser: true }).then(() => {
+mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
 }).catch(err => {
     console.log("Mongo connection error")
