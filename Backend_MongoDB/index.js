@@ -44,7 +44,7 @@ mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true 
 
 
 app.get('/login', (req,res) => {
-    res.render('users/login_home')
+    res.render('users/login')
 })
 
 app.post('/login', async(req,res) => {

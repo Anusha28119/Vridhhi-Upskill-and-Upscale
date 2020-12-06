@@ -1,49 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout ('/layouts/boilerplate')%>
+<div class="row">
+    <h3 style="font-weight: 800; color: black;" class="text-center">Register as a job provider today!</h3>
+    <div class="card col-6 offset-3 mt-4" style="background-color: darkorange; font-weight: 600; fill-opacity: 0.5;">
+    <form class="row g-3" action="/job_providers" method="POST">
+        <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Users</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-</head>
-
-<body>
-    <h1>Register as a Job Provider Today!</h1>
-    <form action="/job_providers" method="POST">
-        <div class="form-group">
+        <div class="mb-2 mt-3">
         <label for="org_name">Enter organisation name</label>
-        <input type="text" name="org_name" id="org_name"><br/>
+        <input class="form-control" type="text" name="org_name" id="org_name" required><br/>
+        </div>
 
+        <div class="mb-2">
         <label for="name">Enter full name</label>
-        <input type="text" name="name" id="name"><br/>
+        <input class="form-control" type="text" name="name" id="name" required><br/>
+        </div>
 
+        <div class="mb-2">
         <label for="phoneNo">Enter mobile number</label>
-        <input type="number" name="phoneNo" id="phoneNo"><br />
+        <input class="form-control" type="number" name="phoneNo" id="phoneNo required"><br />
+        </div>
 
+        <div class="mb-2">
         <label for="email">Enter email address</label>
-        <input type="email" name="email" id="email"><br />
+        <input class="form-control" type="email" name="email" id="email" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="password">Enter password</label>
-        <input type="password" name="password" id="password"><br />
+        <input class="form-control" type="password" name="password" id="password" required><br />
+        </div>
  
+        <div class="mb-2">
         <label for="vacancies">Enter the number of vacancies in your organisation</label>
-        <input type="text" name="vacancies" id="vacancies"><br />
+        <input class="form-control" type="text" name="vacancies" id="vacancies" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="job_profiles">Enter the job_profiles available in your organisation</label>
-        <input type="text" name="job_profiles" id="job_profiles"><br />
+        <input class="form-control" type="text" name="job_profiles" id="job_profiles" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="total_compensation">Enter the total compensation going to be offered by your organisation</label>
-        <input type="number" name="total_compensation" id="total_compensation"><br />
-        </textarea><br />
-        <input type="submit" name="submit" value="Submit" />
+        <input class="form-control" type="number" name="total_compensation" id="total_compensation" required><br />
+        </div>
+
+        <div class="mb-3 mt-2">
+        <input class="btn btn-dark form-control" type="submit" name="submit" value="Submit" />
+        </div>
         </div>
     </form>
-
-</body>
-</html>
+    </div>
+</div>

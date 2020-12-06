@@ -1,49 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrepreneur Registration</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-</head>
-
-<body>
-    <h1>Register as an Entrepreneur Today!</h1>
-    <form action="/entrepreneurs" method="POST">
-        <div class="form-group">   
+<% layout ('/layouts/boilerplate')%>
+<div class="row">
+    <h3 style="font-weight: 800; color: darkorange;" class="text-center">Register as an entrepreneur today!</h3>
+    <div class="card col-6 offset-3 mt-4" style="background-color: darkorange; font-weight: 600; fill-opacity: 0.5;">
+    <form class="row g-3" action="/entrepreneurs" method="POST">
+        <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
+        
+        <div class="mb-2 mt-3">
         <label for="name">Enter full name</label>
-        <input type="text" name="name" id="name"><br />
+        <input class="form-control" type="text" name="name" id="name" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="phoneNo">Enter mobile number</label>
-        <input type="number" name="phoneNo" id="phoneNo"><br />
+        <input class="form-control" type="number" name="phoneNo" id="phoneNo" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="email">Enter email address (abc@example.com)</label>
-        <input type="email" name="email" id="email"><br />
+        <input class="form-control" type="email" name="email" id="email" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="password">Enter password</label>
-        <input type="password" name="password" id="password"><br />
+        <input class="form-control" type="password" name="password" id="password" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="venture_name">Enter the name of your venture/organisation/product</label>
-        <input type="text" name="venture_name" id="venture_name"><br />
+        <input class="form-control" type="text" name="venture_name" id="venture_name" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="team_leader">Enter the team leader's full name</label>
-        <input type="text" name="team_leader" id="team_leader"><br />
+        <input class="form-control" type="text" name="team_leader" id="team_leader" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="brief_idea_overview">Brief Idea Overview : </label><br />
-        <textarea rows="5" cols="50" name="brief_idea_overview" id="brief_idea_overview">
+        <textarea class="form-control" rows="5" cols="50" name="brief_idea_overview" id="brief_idea_overview" required>
         </textarea><br />
+        </div>
 
+        <div class="mb-2">
         <label for="funding_required">Enter in rupees the funding required by your organisation</label>
-        <input type="number" name="funding_required" id="funding_required"><br />
+        <input class="form-control" type="number" name="funding_required" id="funding_required" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="category">Enter a category for your venture</label><br />
-        <select name="category" id="category">
+        <select class="form-control" name="category" id="category" required>
             <option value="science and technology" selected>Science and Technology</option>
             <option value="arts">Arts</option>
             <option value="social entrepreneurship">Social Entrepreneurship</option>
@@ -53,31 +58,44 @@
             <option value="safety">Safety</option>
             <option value="other">Others</option>
         </select><br />
+        </div>
 
+        <div class="mb-2">
         <label for="start_date_of_venture">Enter the starting date of your venture</label>
-        <input type="date" name="start_date_of_venture" id="start_date_of_venture"><br />
+        <input class="form-control" type="date" name="start_date_of_venture" id="start_date_of_venture" required><br />
+        </div>
 
+        <div class="mb-2 date">
         <label for="current_number_of_employees">Enter the current no. of employees in your venture</label>
-        <input type="number" name="current_number_of_employees" id="current_number_of_employees"><br />
+        <input class="form-control" type="number" name="current_number_of_employees" id="current_number_of_employees" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="working_location">"Enter your working location</label>
-        <input type="text" name="working_location" id="working_location"><br />
+        <input class="form-control" type="text" name="working_location" id="working_location" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="idea_phase">Is your project currently in the ideation phase?</label><br />
-        <input type="radio" name="idea_phase" id="idea_phase" value="yes">Yes<br />
+        <input type="radio" name="idea_phase" id="idea_phase" value="yes" required>Yes<br />
         <input type="radio" name="idea_phase" id="idea_phase" value="no">No<br />
+        </div>
 
+        <div class="mb-2">
         <label for="current_annual_turnover">Enter the current annual turnover (in rupees) of your venture (Enter 0 if still in ideation phase)</label>
-        <input type="number" name="current_annual_turnover" id="current_annual_turnover"><br />
+        <input class="form-control" type="number" name="current_annual_turnover" id="current_annual_turnover" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="job_provider">Are you also a job provider</label><br />
-        <input type="radio" name="job_provider" id="job_provider" value="yes">Yes<br />
+        <input type="radio" name="job_provider" id="job_provider" value="yes"required>Yes<br />
         <input type="radio" name="job_provider" id="job_provider" value="no">No<br />
+        </div>
         
-        <input type="submit" name="submit" value="Submit" />
+        <div class="mb-3 mt-2">
+        <input class="form-control btn btn-dark" type="submit" name="submit" value="Submit" />
+        </div>
         </div>
     </form>
-
-</body>
-
-</html>
+</div>
+</div>

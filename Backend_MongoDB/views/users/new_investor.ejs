@@ -1,47 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout ('/layouts/boilerplate')%>
+<div class="row">
+    <h3 style="font-weight: 800; color: black;" class="text-center">Register as an investor today!</h3>
+    <div class="card col-6 offset-3 mt-4" style="background-color: darkorange; font-weight: 600; fill-opacity: 0.5;">
+    <form class="row g-3" action="/investors" method="POST">
+        <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Registration</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-</head>
-
-<body>
-    <h1>Register as an Investor Today!</h1>
-    <form action="/investors" method="POST">
-        <div class="form-group">
-
+        <div class="mb-2 mt-3">
         <label for="name">Enter full name</label>
-        <input type="text" name="name" id="name"><br />
+        <input class="form-control" type="text" name="name" id="name" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="phoneNo">Enter mobile number</label>
-        <input type="number" name="phoneNo" id="phoneNo"><br />
+        <input class="form-control" type="number" name="phoneNo" id="phoneNo" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="email">Enter email address (abc@example.com)</label>
-        <input type="email" name="email" id="email"><br />
+        <input class="form-control" type="email" name="email" id="email" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="password">Enter password</label>
-        <input type="password" name="password" id="password"><br />
+        <input class="form-control" type="password" name="password" id="password" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="investment_budget">Enter your investment budget(in rupees)</label>
-        <input type="number" name="investment_budget" id="investment_budget"><br />
+        <input class="form-control" type="number" name="investment_budget" id="investment_budget" required><br />
+        </div>
 
+        <div class="mb-2">
         <label for="expected_return">Enter your expected return(in rupees)</label>
-        <input type="number" name="expected_return" id="expected_return"><br />
+        <input class="form-control" type="number" name="expected_return" id="expected_return" required><br />
+        </div>
 
-        <label for="profit_sharing">Is profit sharing involved?</label><br />
-        <input type="radio" name="profit_sharing" id="profit_sharing" value="yes">Yes<br />
+        <div class="mb-2">
+        <label for="profit_sharing">Is profit sharing involved?</label>
+        <input type="radio" name="profit_sharing" id="profit_sharing" value="yes" required>Yes
         <input type="radio" name="profit_sharing" id="profit_sharing" value="no">No<br />
+        </div>
 
+        <div class="mb-2">
         <label for="preferred_field_first">Enter first preferred domain of investment</label><br />
-        <select class="select-picker" name="preferred_field_first" id="preferred_field_first">
+        <select class=" form-control select-picker" name="preferred_field_first" id="preferred_field_first" required>
             <option value="science and technology" selected>Science and Technology</option>
             <option value="arts">Arts</option>
             <option value="social entrepreneurship">Social Entrepreneurship</option>
@@ -51,9 +53,11 @@
             <option value="safety">Safety</option>
             <option value="others">Others</option>
         </select><br />
+        </div>
 
+        <div class="mb-2">
         <label for="preferred_field_second">Enter second preferred domain of investment</label><br />
-        <select class="select-picker" name="preferred_field_second" id="preferred_field_second">
+        <select class="form-control select-picker" name="preferred_field_second" id="preferred_field_second" required>
             <option value="science and technology" selected>Science and Technology</option>
             <option value="arts">Arts</option>
             <option value="social entrepreneurship">Social Entrepreneurship</option>
@@ -63,9 +67,11 @@
             <option value="safety">Safety</option>
             <option value="others">Others</option>
         </select><br />
+        </div>
 
-        <label for="preferred_qualification">Enter preferred graduation qualification</label><br />
-        <select class="select-picker" name="preferred_qualification" id="preferred_qualification" >
+        <div class="mb-2">
+        <label for="preferred_qualification" required>Enter preferred graduation qualification</label><br />
+        <select class="select-picker form-control" name="preferred_qualification" id="preferred_qualification" >
             <option value="B. Tech" selected>B. Tech</option>
             <option value="BBA">BBA</option>
             <option value="B. Sc">B. Sc</option>
@@ -74,12 +80,12 @@
             <option value="B. Arch">B. Arch</option>
             <option value="other">Others</option>
         </select><br />
+        </div>
 
-        
-        <input type="submit" name="submit" value="Submit" />
+        <div class="mb-3 mt-2">
+        <input class="btn btn-dark form-control" type="submit" name="submit" value="Submit" />
+        </div>
         </div>
     </form>
-
-</body>
-
-</html>
+</div>
+</div>
