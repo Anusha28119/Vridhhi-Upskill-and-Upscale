@@ -12,25 +12,23 @@
             integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     </head>
     <body>
-        <h1>MY PROFILE!!</h1>
+        <h1>MY PROFILE!</h1>
         <table class="table">
             <tr>
                 <th>Name</th>
                 <th>Phone No.</th>
                 <th>Email Address</th>
-                <th>10th</th>
-                <th>10th Org</th>
-                <th>12th</th>
-                <th>12th Org</th>
-                <th>Graduation</th>
-                <th>Graduation Degree</th>
-                <th>Graduation Org</th>
-                <th>Post Graduation</th>
-                <th>Post Graduation Degree</th>
-                <th>Post Graduation Org</th>
-                <th>Gold Badges</th>
-                <th>Silver Org</th>
-                <th>Bronze Badges</th>
+                <th>Name of Venture</th>
+                <th>Team Leader</th>
+                <th>Idea Overview</th>
+                <th>Funding Required</th>
+                <th>Category</th>
+                <th>Start Date</th>
+                <th>No. of Employees</th>
+                <th>Location</th>
+                <th>In Idea Phase</th>
+                <th>Annual Turnover</th>
+                <th>Job Provider</th>
                 
                 
             </tr>
@@ -40,23 +38,20 @@
                     <td><%= users.name %></td>
                     <td><%= users.phoneNo %></td>
                     <td><%= users.email %></td>
-                    <td><%= users.tenth %></td>
-                    <td><%= users.tenth_org %></td>
-                    <td><%= users.twelfth %></td>
-                    <td><%= users.twelfth_org %></td>
-                    <td><%= users.graduation%></td>
-                    <td><%= users.graduation_degree%></td>
-                    <td><%= users.graduation_org %></td>
-                    <td><%= users.post_graduation %></td>
-                    <td><%= users.post_graduation_degree %></td>
-                    <td><%= users.post_graduation_org %></td>
-                    <td><%= users.gold_badge %></td>
-                    <td><%= users.silver_badge %></td>
-                    <td><%= users.bronze_badge %></td>
-                
+                    <td><%= users.venture_name %></td>
+                    <td><%= users.team_leader %></td>
+                    <td><%= users.brief_idea_overview %></td>
+                    <td><%= users.funding_required %></td>
+                    <td><%= users.category %></td>
+                    <td><%= users.start_date_of_venture %></td>
+                    <td><%= users.current_number_of_employees %></td>
+                    <td><%= users.working_location %></td>
+                    <td><%= users.idea_phase %></td>
+                    <td><%= users.current_annual_turnover %></td>
+                    <td><%= users.job_provider %></td>
 
                 </tr>
-               
+              
         </table>
 
         <form action="/logout" method="POST">

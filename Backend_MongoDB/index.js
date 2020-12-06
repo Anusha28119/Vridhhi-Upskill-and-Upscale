@@ -80,9 +80,8 @@ app.post('/login', async(req,res) => {
             //res.send(user);
             console.log(user);
             global.User_profile=user;
-
+            //console.log(users);
             const users = await seeker.findOne({email});
-            console.log(users);
             res.render('users/profile_seeker', {users:users});
                 //var userr = req.user;
                 //userr._id = encrypt(userr._id);
@@ -110,7 +109,9 @@ app.post('/login', async(req,res) => {
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
             req.session.user_id=user._id;
-            res.redirect('/secret')
+            const users = await investor.findOne({email});
+            res.render('users/profile_investor', {users:users});
+            //res.redirect('/secret')
         }
        else{
          res.redirect('/login')
@@ -125,7 +126,12 @@ app.post('/login', async(req,res) => {
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
             req.session.user_id=user._id;
-            res.redirect('/secret')
+            const users = await job_provider_main.findOne({email});
+            var x = users.org_name;
+            console.log(x);
+            const userrr = await job_provider_profiles.find({org_name:x});
+            res.render('users/profile_job_providers', {users:users,userrr:userrr});
+            //res.redirect('/secret')
         }
        else{
          res.redirect('/login')
@@ -140,7 +146,10 @@ app.post('/login', async(req,res) => {
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
             req.session.user_id=user._id;
-            res.redirect('/secret')
+            const users = await entrepreneur.findOne({email});
+            res.render('users/profile_entrepreneur', {users:users});
+
+           // res.redirect('/secret')
         }
        else{
          res.redirect('/login')
