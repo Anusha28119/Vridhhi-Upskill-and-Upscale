@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const seeker = require('./models/seeker');
 
-mongoose.connect('mongodb://localhost/Vriddhi_seeker', { useNewUrlParser: true }).then(() => {
+mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
 }).catch(err => {
     console.log("Mongo connection error")
@@ -12,7 +12,7 @@ const seekers = [
     {
     name: "Aditi Khandelwal",
     phoneNo: 980980990,
-    email: "aditi@hotmail.com",
+    email: "aditii@hotmail.com",
     password: "aditi/!",
     tenth: true,
     tenth_org: "DPS Noida",
