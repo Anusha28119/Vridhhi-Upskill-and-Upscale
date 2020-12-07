@@ -160,6 +160,11 @@ app.post('/login', async(req,res) => {
 
 })
 
+// //app.get('/myprofile_seeker',requireLogin,async(req,res) => {
+
+//     res.render('users/profile_seeker')
+// })
+
 app.get('/seekers/resume',requireLogin,async(req,res) => {
     res.render('users/resume_building')
 })
@@ -492,7 +497,7 @@ app.post('/seekers', async (req,res) => {
     await newSeeker.save()
     req.session.user_id=newSeeker._id;
     console.log(newSeeker)
-    res.redirect('/profile_seeker')
+    res.render('users/profile_seeker',{users:newSeeker})
 
     
 })
@@ -519,7 +524,7 @@ app.post('/entrepreneurs', async (req, res) => {
     await newEntrepreneur.save()
     req.session.user_id=newEntrepreneur._id;
     console.log(newEntrepreneur)
-    res.redirect('/profile_entrepreneur')
+    res.render('users/profile_entrepreneur',{users:newEntrepreneur})
 })
 
 app.post('/investors', async (req, res) => {
@@ -539,7 +544,7 @@ app.post('/investors', async (req, res) => {
     await newInvestor.save()
     req.session.user_id=newInvestor._id;
     console.log(newInvestor)
-    res.redirect('/profile_investor')
+    res.render('users/profile_investor',{users:newInvestor})
 })
 
 app.get('/register/seeker', (req,res) => {
@@ -617,7 +622,12 @@ app.post('/job_provider_profiles', async (req,res) => {
     await newjob_provider_profiles.save()
     req.session.user_id=newjob_provider_profiles._id;
     console.log(newjob_provider_profiles)
-    res.redirect('/profile_job_providers')
+    var x=req.body.org_name;
+    console.log(x);
+    const userjob_provider_main = await job_provider_main.findOne({org_name:x});
+    const userrr = await job_provider_profiles.find({org_name:x});
+    res.render('users/profile_job_providers',{users:userjob_provider_main,userrr:userrr})
+    
     
 })
 
