@@ -172,6 +172,14 @@ app.get('/seekers/interview_prep', requireLogin,async (req, res) => {
     res.render('users/interview_prep')
 })
 
+app.get('/about_us', async (req, res) => {
+    res.render('users/about')
+})
+
+app.get('/contact_us', async (req, res) => {
+    res.render('users/contact')
+})
+
 app.get('/seekers/quiz', requireLogin, async (req, res) => {
     res.render('users/quiz_main')
 })
