@@ -164,6 +164,10 @@ app.get('/seekers/resume',requireLogin,async(req,res) => {
     res.render('users/resume_building')
 })
 
+app.get('/seekers/skills', requireLogin, async (req, res) => {
+    res.render('users/skills')
+})
+
 app.get('/seekers/scholarships', requireLogin,async (req, res) => {
     res.render('users/scholarships')
 })
