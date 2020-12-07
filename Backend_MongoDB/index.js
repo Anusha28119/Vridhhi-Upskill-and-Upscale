@@ -539,7 +539,7 @@ app.post('/investors', async (req, res) => {
     await newInvestor.save()
     req.session.user_id=newInvestor._id;
     console.log(newInvestor)
-    res.redirect('/profile_investor')
+    res.render('users/profile_investor')
 })
 
 app.get('/register/seeker', (req,res) => {
