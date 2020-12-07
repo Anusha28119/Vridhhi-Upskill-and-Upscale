@@ -1,42 +1,19 @@
-<!DOCTYPE html> 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>All Entrepreneurs</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-            integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    </head>
-    <body>
-        <h1>MY PROFILE!!</h1>
-        <table class="table">
-            <tr>
+<% layout ('/layouts/boilerplate_seeker')%>
+        <h1>MY PROFILE</h1>
+        <table class="table table-responsive">
+            <tr class="table-dark">
                 <th>Name</th>
                 <th>Phone No.</th>
                 <th>Email Address</th>
-                <th>10th</th>
-                <th>10th Org</th>
-                <th>12th</th>
-                <th>12th Org</th>
-                <th>Graduation</th>
-                <th>Graduation Degree</th>
-                <th>Graduation Org</th>
-                <th>Post Graduation</th>
-                <th>Post Graduation Degree</th>
-                <th>Post Graduation Org</th>
-                <th>Gold Badges</th>
-                <th>Silver Org</th>
-                <th>Bronze Badges</th>
-                
+                <th>Completed class 10?</th>
+                <th> Class 10th Organization</th>
+                <th>Completed class 12></th>
+                <th>Class 12th Organization</th>
                 
             </tr>
             
                 
-                <tr>
+                <tr class="table-light">
                     <td><%= users.name %></td>
                     <td><%= users.phoneNo %></td>
                     <td><%= users.email %></td>
@@ -44,24 +21,34 @@
                     <td><%= users.tenth_org %></td>
                     <td><%= users.twelfth %></td>
                     <td><%= users.twelfth_org %></td>
-                    <td><%= users.graduation%></td>
-                    <td><%= users.graduation_degree%></td>
-                    <td><%= users.graduation_org %></td>
-                    <td><%= users.post_graduation %></td>
-                    <td><%= users.post_graduation_degree %></td>
-                    <td><%= users.post_graduation_org %></td>
-                    <td><%= users.gold_badge %></td>
-                    <td><%= users.silver_badge %></td>
-                    <td><%= users.bronze_badge %></td>
-                
-
+                    
                 </tr>
                
         </table>
 
-        <form action="/logout" method="POST">
-            <button>LOGOUT</button>
-        </form>
+        <table class="table table-responsive">
+            <tr class="table-dark">
+            <th> Completed Graduation?</th>
+            <th>Graduation Degree</th>
+            <th>Graduation Organization</th>
+            <th>Completed Post Graduation?</th>
+            <th>Post Graduation Degree</th>
+            <th>Post Graduation Organization</th>
         
-    </body>
-</html>
+            </tr>
+        
+        
+            <tr class="table-light">
+                <td><%= users.graduation%></td>
+                <td><%= users.graduation_degree%></td>
+                <td><%= users.graduation_org %></td>
+                <td><%= users.post_graduation %></td>
+                <td><%= users.post_graduation_degree %></td>
+                <td><%= users.post_graduation_org %></td>
+            </tr>
+        
+        </table>
+
+        
+
+       

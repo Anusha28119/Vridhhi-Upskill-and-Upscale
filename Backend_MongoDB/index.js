@@ -52,7 +52,7 @@ app.get('/login', (req,res) => {
 app.get('/myprofile_seeker',requireLogin,(req,res) => {
     
     //const {user}=req.params;
-    res.render('users/myprofile_seeker');
+    res.render('users/profile_seeker');
 })
 
 
@@ -97,6 +97,7 @@ app.post('/login', async(req,res) => {
           //res.render('users/myprofile_seeker', { title: 'profile', user: user });
           }
          else{
+           res.status(401).send('Incorrect username or password. Please try again!');  
            res.redirect('/login')
           }
         }
@@ -159,7 +160,35 @@ app.post('/login', async(req,res) => {
 
 })
 
-app.get('/seekers', async(req,res) => {
+app.get('/seekers/resume',requireLogin,async(req,res) => {
+    res.render('users/resume_building')
+})
+
+app.get('/seekers/scholarships', requireLogin,async (req, res) => {
+    res.render('users/scholarships')
+})
+
+app.get('/seekers/interview_prep', requireLogin,async (req, res) => {
+    res.render('users/interview_prep')
+})
+
+app.get('/seekers/quiz', requireLogin, async (req, res) => {
+    res.render('users/quiz_main')
+})
+
+app.get('/seekers/quizCPP', requireLogin, async (req, res) => {
+    res.render('users/quiz_cpp')
+})
+
+app.get('/seekers/quizHTML', requireLogin, async (req, res) => {
+    res.render('users/quiz_HTML')
+})
+
+app.get('/seekers/quizPy', requireLogin, async (req, res) => {
+    res.render('users/quiz_Py')
+})
+
+app.get('/seekers', requireLogin, async(req,res) => {
     const {tenth} = req.query
     if(tenth){
         const users = await seeker.find({tenth})
@@ -172,7 +201,7 @@ app.get('/seekers', async(req,res) => {
     }
 })
 
-app.get('/seekers1', async (req, res) => {
+app.get('/seekers1', requireLogin, async (req, res) => {
     const { twelfth } = req.query
     if (twelfth) {
         const users = await seeker.find({ twelfth })
@@ -185,7 +214,7 @@ app.get('/seekers1', async (req, res) => {
     }
 })
 
-app.get('/seekers2', async (req, res) => {
+app.get('/seekers2', requireLogin, async (req, res) => {
     const { graduation } = req.query
     if (graduation) {
         const users = await seeker.find({ graduation })
@@ -198,7 +227,7 @@ app.get('/seekers2', async (req, res) => {
     }
 })
 
-app.get('/seekers3', async (req, res) => {
+app.get('/seekers3', requireLogin, async (req, res) => {
     const { post_graduation } = req.query
     if (post_graduation) {
         const users = await seeker.find({ post_graduation })
@@ -211,7 +240,7 @@ app.get('/seekers3', async (req, res) => {
     }
 })
 
-app.get('/seekers4', async (req, res) => {
+app.get('/seekers4', requireLogin, async (req, res) => {
     const { gold_badge } = req.query
     if (gold_badge) {
         const users = await seeker.find({ gold_badge })
@@ -224,7 +253,7 @@ app.get('/seekers4', async (req, res) => {
     }
 })
 
-app.get('/seekers5', async (req, res) => {
+app.get('/seekers5', requireLogin, async (req, res) => {
     const { silver_badge } = req.query
     if (silver_badge) {
         const users = await seeker.find({ silver_badge })
@@ -237,7 +266,7 @@ app.get('/seekers5', async (req, res) => {
     }
 })
 
-app.get('/seekers6', async (req, res) => {
+app.get('/seekers6', requireLogin, async (req, res) => {
     const { bronze_badge } = req.query
     if (bronze_badge) {
         const users = await seeker.find({ bronze_badge })
@@ -250,7 +279,7 @@ app.get('/seekers6', async (req, res) => {
     }
 })
 
-app.get('/investors1', async (req, res) => {
+app.get('/investors1', requireLogin,async (req, res) => {
     const { profit_sharing } = req.query
     if (profit_sharing) {
         const users = await investor.find({ profit_sharing })
@@ -263,7 +292,7 @@ app.get('/investors1', async (req, res) => {
     }
 })
 
-app.get('/investors2', async (req, res) => {
+app.get('/investors2', requireLogin, async (req, res) => {
     const { preferred_field_first } = req.query
     if (preferred_field_first) {
         const users = await investor.find({ preferred_field_first })
@@ -276,7 +305,7 @@ app.get('/investors2', async (req, res) => {
     }
 })
 
-app.get('/investors3', async (req, res) => {
+app.get('/investors3', requireLogin, async (req, res) => {
     const { preferred_field_second } = req.query
     if (preferred_field_second) {
         const users = await investor.find({ preferred_field_second })
@@ -289,7 +318,7 @@ app.get('/investors3', async (req, res) => {
     }
 })
 
-app.get('/investors4', async (req, res) => {
+app.get('/investors4', requireLogin, async (req, res) => {
     const { preferred_qualification } = req.query
     if (preferred_qualification) {
         const users = await investor.find({ preferred_qualification })
@@ -302,7 +331,7 @@ app.get('/investors4', async (req, res) => {
     }
 })
 
-app.get('/providers1', async (req, res) => {
+app.get('/providers1', requireLogin, async (req, res) => {
     const { org_name } = req.query
     if (org_name) {
         const users = await job_provider_profiles.find({ org_name })
@@ -315,7 +344,7 @@ app.get('/providers1', async (req, res) => {
     }
 })
 
-app.get('/providers2', async (req, res) => {
+app.get('/providers2', requireLogin, async (req, res) => {
     const { job_profile } = req.query
     if (job_profile) {
         const users = await job_provider_profiles.find({ job_profile })
@@ -328,7 +357,7 @@ app.get('/providers2', async (req, res) => {
     }
 })
 
-app.get('/providers3', async (req, res) => {
+app.get('/providers3', requireLogin, async (req, res) => {
     const { profile_location } = req.query
     if (profile_location) {
         const users = await job_provider_profiles.find({ profile_location })
@@ -341,7 +370,7 @@ app.get('/providers3', async (req, res) => {
     }
 })
 
-app.get('/providers4', async (req, res) => {
+app.get('/providers4', requireLogin, async (req, res) => {
     const { req_tenth } = req.query
     if (req_tenth) {
         const users = await job_provider_profiles.find({ req_tenth })
@@ -354,7 +383,7 @@ app.get('/providers4', async (req, res) => {
     }
 })
 
-app.get('/providers5', async (req, res) => {
+app.get('/providers5', requireLogin, async (req, res) => {
     const { req_twelfth } = req.query
     if (req_twelfth) {
         const users = await job_provider_profiles.find({ req_twelfth })
@@ -367,7 +396,7 @@ app.get('/providers5', async (req, res) => {
     }
 })
 
-app.get('/providers6', async (req, res) => {
+app.get('/providers6', requireLogin, async (req, res) => {
     const { req_graduation_degree } = req.query
     if (req_graduation_degree) {
         const users = await job_provider_profiles.find({ req_graduation_degree })
@@ -380,7 +409,7 @@ app.get('/providers6', async (req, res) => {
     }
 })
 
-app.get('/providers7', async (req, res) => {
+app.get('/providers7', requireLogin, async (req, res) => {
     const { req_post_graduation_degree } = req.query
     if (req_post_graduation_degree) {
         const users = await job_provider_profiles.find({ req_post_graduation_degree })
@@ -393,7 +422,7 @@ app.get('/providers7', async (req, res) => {
     }
 })
 
-app.get('/entrepreneurs1', async (req, res) => {
+app.get('/entrepreneurs1', requireLogin, async (req, res) => {
     const { category } = req.query
     if (category) {
         const users = await entrepreneur.find({ category })
@@ -406,7 +435,7 @@ app.get('/entrepreneurs1', async (req, res) => {
     }
 })
 
-app.get('/entrepreneurs2', async (req, res) => {
+app.get('/entrepreneurs2', requireLogin, async (req, res) => {
     const { working_location } = req.query
     if (working_location) {
         const users = await entrepreneur.find({ working_location })
@@ -451,7 +480,7 @@ app.post('/seekers', async (req,res) => {
     await newSeeker.save()
     req.session.user_id=newSeeker._id;
     console.log(newSeeker)
-    res.redirect('/newUser')
+    res.redirect('/profile_seeker')
 
     
 })
@@ -478,7 +507,7 @@ app.post('/entrepreneurs', async (req, res) => {
     await newEntrepreneur.save()
     req.session.user_id=newEntrepreneur._id;
     console.log(newEntrepreneur)
-    res.redirect('/newUser')
+    res.redirect('/profile_entrepreneur')
 })
 
 app.post('/investors', async (req, res) => {
@@ -498,7 +527,7 @@ app.post('/investors', async (req, res) => {
     await newInvestor.save()
     req.session.user_id=newInvestor._id;
     console.log(newInvestor)
-    res.redirect('/newUser')
+    res.redirect('/profile_investor')
 })
 
 app.get('/register/seeker', (req,res) => {
@@ -515,6 +544,9 @@ app.get('/register/seeker', (req,res) => {
     });
 })
 
+app.get('/home',(req,res) => {
+    res.render('users/home')
+})
 
 app.get('/register/entrepreneur', (req, res) => {
     res.render('users/new_entrepreneur')
@@ -573,7 +605,7 @@ app.post('/job_provider_profiles', async (req,res) => {
     await newjob_provider_profiles.save()
     req.session.user_id=newjob_provider_profiles._id;
     console.log(newjob_provider_profiles)
-    res.redirect('/newUser')
+    res.redirect('/profile_job_providers')
     
 })
 
