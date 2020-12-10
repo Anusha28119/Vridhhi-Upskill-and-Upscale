@@ -64,6 +64,9 @@ const entrepreneurSchema = new mongoose.Schema(
         job_provider:{
             type:Boolean,
             required:false
+        },
+        session_id:{
+            type:String
         }
 
 

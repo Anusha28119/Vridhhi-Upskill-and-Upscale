@@ -70,6 +70,9 @@ const seekerSchema = new mongoose.Schema(
         bronze_badge: {
             type: String,
             required: false
+        },
+        session_id:{
+            type:String
         }
 
     }
