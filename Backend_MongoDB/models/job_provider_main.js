@@ -34,6 +34,9 @@ const providerMainSchema = new mongoose.Schema(
         total_compensation: {
             type: Number,
             required: false
+        },
+        session_id:{
+            type:String
         }
     }
 )
