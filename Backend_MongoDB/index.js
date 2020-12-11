@@ -212,7 +212,7 @@ app.get('/myprofile_entrepreneur',requireLogin,async(req,res) => {
     res.render('users/profile_entrepreneur',{users:user})
  })
 
-app.get('/seekers/resume',requireLogin,async(req,res) => {
+app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
     res.render('users/resume_building')
 }))
 
