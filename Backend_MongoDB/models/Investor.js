@@ -47,6 +47,9 @@ const investorSchema = new mongoose.Schema(
             type: String,
             required: false,
             lowercase: true,
+        },
+        session_id:{
+            type:String
         }
 
 

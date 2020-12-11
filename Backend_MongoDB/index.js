@@ -35,6 +35,7 @@ const requireLogin =(req,res, next) =>{
     {
         return res.redirect('/login')
     }
+    
     next();
 
 }
@@ -51,11 +52,11 @@ app.get('/login', (req,res) => {
     res.render('users/login')
 })
 
-app.get('/myprofile_seeker',requireLogin,(req,res) => {
+// app.get('/myprofile_seeker',requireLogin,(req,res) => {
     
-    //const {user}=req.params;
-    res.render('users/profile_seeker');
-})
+//     //const {user}=req.params;
+//     res.render('users/profile_seeker');
+// })
 
 
 app.get('/profile', function(req, res, next) {
@@ -78,12 +79,18 @@ app.post('/login', catchAsync(async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            await user.save()
+            console.log(user.session_id)
+            console.log(req.session.user_id)
             //res.send(user);
             console.log(user);
             global.User_profile=user;
             //console.log(users);
             const users = await seeker.findOne({email});
+            //user.session_id=user._id;
+            //await user.save()
             res.render('users/profile_seeker', {users:users});
           }
          else{
@@ -99,7 +106,9 @@ app.post('/login', catchAsync(async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            await user.save()
             const users = await investor.findOne({email});
             res.render('users/profile_investor', {users:users});
             //res.redirect('/secret')
@@ -116,12 +125,17 @@ app.post('/login', catchAsync(async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            await user.save()
             const users = await job_provider_main.findOne({email});
             var x = users.org_name;
             console.log(x);
-            const userrr = await job_provider_profiles.find({org_name:x});
-            res.render('users/profile_job_providers', {users:users,userrr:userrr});
+            const userr = await job_provider_profiles.find({org_name:x});
+            // userr.session_id=user._id;
+            // await userr.save()
+            // console.log(userr)
+            res.render('users/profile_job_providers', {users:users,userrr:userr});
             //res.redirect('/secret')
         }
        else{
@@ -136,7 +150,11 @@ app.post('/login', catchAsync(async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            console.log(user.session_id)
+            console.log(req.session.user_id)
+            await user.save()
             const users = await entrepreneur.findOne({email});
             res.render('users/profile_entrepreneur', {users:users});
 
@@ -151,6 +169,50 @@ app.post('/login', catchAsync(async(req,res) => {
 }))
 
 app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
+}))
+
+app.get('/myprofile_provider',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const users = await job_provider_main.findOne({session_id:x});
+            var y = users.org_name;
+            console.log(y);
+            const userr = await job_provider_profiles.find({org_name:y});
+            // userr.session_id=user._id;
+            // await userr.save()
+            // console.log(userr)
+            res.render('users/profile_job_providers', {users:users,userrr:userr});
+ })
+
+app.get('/myprofile_investor',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await investor.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_investor',{users:user})
+ })
+
+app.get('/myprofile_seeker',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_seeker',{users:user})
+ })
+
+app.get('/myprofile_entrepreneur',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await entrepreneur.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_entrepreneur',{users:user})
+ })
+
+app.get('/seekers/resume',requireLogin,async(req,res) => {
     res.render('users/resume_building')
 }))
 

@@ -53,6 +53,9 @@ const providerProfilesSchema = new mongoose.Schema(
         bronze_required: {
             type: String,
             required: false
+        },
+        session_id:{
+            type:String
         }
 
     }
