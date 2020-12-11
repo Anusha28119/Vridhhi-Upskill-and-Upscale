@@ -13,6 +13,8 @@ const job_provider_profiles = require('./models/job_provider_profiles');
 const { db } = require('./models/seeker');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+var {send_email}=require('./util.js')
+import nodemailer from 'nodemailer';
 
 
 const mailgun = require('mailgun-js');
@@ -36,6 +38,17 @@ const requireLogin =(req,res, next) =>{
     next();
 
 }
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: "vriddhiupscale@gmail.com",
+      pass: "website@123",
+    },
+  });
+  const SECRET = 'aslkdjlkaj10830912039jlkoaiuwerasdjflkasd';
+const SECRET_2 = 'ajsdklfjaskljgklasjoiquw01982310nlksas;sdlkfj';
+const EMAIL_SECRET = 'asdf1093KMnzxcvnkljvasdu09123nlasdasdf';
+
 
 mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
@@ -164,7 +177,30 @@ app.post('/login', async(req,res) => {
 
 //     res.render('users/profile_seeker')
 // })
+app.get('/confirmation', async (req, res) => {
+   // id="vriddhiupscale@gmail.com"
+    /*try {
+      const { user: { email } } = jwt.verify(req.params.token, EMAIL_SECRET);
+      await models.User.update({ confirmed: true }, { where: { email } });
+    } catch (e) {
+      res.send('error');
+    }*/
+    res.status(202).send("HH")
+    try {
+        console.log("Hello");
+        send_email({
+            to: "sumedhasachdev@gmail.com",
+            subject: "Here is your token  : ",
+            text: "Token is : " 
+        });
+        res.send("Token was sent successfully to you email address");
+    } catch (err) {
+        res.status(200).send("Error!!! Please try again later.");
+    }
 
+  
+    return res.redirect('http://localhost:3000/login');
+  });
 app.get('/seekers/resume',requireLogin,async(req,res) => {
     res.render('users/resume_building')
 })

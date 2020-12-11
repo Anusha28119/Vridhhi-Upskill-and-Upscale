@@ -19,6 +19,10 @@ const seekerSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        confirmed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+          },
         tenth: {
             type: Boolean,
             required: false

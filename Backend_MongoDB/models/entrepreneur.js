@@ -19,6 +19,10 @@ const entrepreneurSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        confirmed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+          },
         venture_name: {
             type:String,
             required:false
