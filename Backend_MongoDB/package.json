@@ -11,11 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "botkit": "^4.10.0",
     "ejs": "^3.1.5",
     "ejs-mate": "^3.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mailgun-js": "^0.22.0",
+    "method-override": "^3.0.0",
     "mongoose": "^5.11.2"
   }
 }
