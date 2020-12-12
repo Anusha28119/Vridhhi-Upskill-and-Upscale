@@ -18,15 +18,14 @@ const nodemailer=require('nodemailer');
 //import nodemailer from 'nodemailer';
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
-
-
+const methodOverride = require('method-override');
 const mailgun = require('mailgun-js');
 const DOMAIN = 'sandbox7b686ee5e6174e7bad512a1edf1e5968.mailgun.org?';
 const mg = mailgun({ apiKey: 'eb83491e730386ce3be54e47ebe81c11-95f6ca46-b3a00501', domain: DOMAIN });
 const ejsMate = require('ejs-mate');
 //const job_provider_main = require('./models/job_provider_main');
 
-
+app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
@@ -65,12 +64,6 @@ mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true 
 app.get('/login', (req,res) => {
     res.render('users/login')
 })
-
-// app.get('/myprofile_seeker',requireLogin,(req,res) => {
-    
-//     //const {user}=req.params;
-//     res.render('users/profile_seeker');
-// })
 
 
 app.get('/profile', function(req, res, next) {
@@ -980,6 +973,44 @@ app.get('/secret',requireLogin,(req,res) => {
     //const {user}=req.params;
     res.render('users/secret',user);
 })
+
+app.get('/editSeeker',requireLogin, catchAsync(async(req,res) =>{
+    var x = req.session.user_id;
+    const user = await seeker.findOne({ session_id: x });
+    console.log("Inside edit seeker")
+    res.render('users/editseeker', { users: user })
+}))
+
+app.put('/editSeeker',requireLogin,catchAsync(async(req,res)=>{
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await seeker.findOneAndUpdate({ session_id: x },req.body, {runValidators:true,new:true});
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    res.render('users/profile_seeker', { users: user })
+}))
+
+app.get('/editProvider', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await job_provider_main.findOne({ session_id: x });
+    console.log("Inside edit provider main")
+    res.render('users/editprovider_main', { users: user })
+}))
+
+app.post('/editProvider', requireLogin, catchAsync(async (req, res) => {
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await job_provider_main.findOneAndUpdate({ session_id: x }, req.body, { runValidators: true, new: true });
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    var y = user.org_name;
+    console.log(y);
+    const userr = await job_provider_profiles.find({ org_name: y });
+    res.render('users/profile_job_providers', { users: user, userrr: userr });
+    
+}))
 
 app.all('*', (req,res,next) => {
     next(new ExpressError("Page not found",404))
