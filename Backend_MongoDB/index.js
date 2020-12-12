@@ -990,6 +990,39 @@ app.put('/editSeeker',requireLogin,catchAsync(async(req,res)=>{
     console.log(user)
     res.render('users/profile_seeker', { users: user })
 }))
+app.get('/editInvestor',requireLogin, catchAsync(async(req,res) =>{
+    var x = req.session.user_id;
+    const user = await investor.findOne({ session_id: x });
+    console.log("Inside edit investor")
+    res.render('users/edit_investor', { users: user })
+}))
+
+app.put('/editInvestor',requireLogin,catchAsync(async(req,res)=>{
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await investor.findOneAndUpdate({ session_id: x },req.body, {runValidators:true,new:true});
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    res.render('users/profile_investor', { users: user })
+}))
+
+app.get('/editEntrepreneur',requireLogin, catchAsync(async(req,res) =>{
+    var x = req.session.user_id;
+    const user = await entrepreneur.findOne({ session_id: x });
+    console.log("Inside edit entrepreneur")
+    res.render('users/edit_entrepreneur', { users: user })
+}))
+
+app.put('/editEntrepreneur',requireLogin,catchAsync(async(req,res)=>{
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await entrepreneur.findOneAndUpdate({ session_id: x },req.body, {runValidators:true,new:true});
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    res.render('users/profile_entrepreneur', { users: user })
+}))
 
 app.get('/editProvider', requireLogin, catchAsync(async (req, res) => {
     var x = req.session.user_id;
