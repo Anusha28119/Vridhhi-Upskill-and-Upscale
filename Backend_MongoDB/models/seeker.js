@@ -20,7 +20,7 @@ const seekerSchema = new mongoose.Schema(
             required: false
         },
         confirmed: {
-            type: DataTypes.BOOLEAN,
+            type: Boolean,
             defaultValue: false,
           },
         tenth: {
@@ -74,6 +74,9 @@ const seekerSchema = new mongoose.Schema(
         bronze_badge: {
             type: String,
             required: false
+        },
+        session_id:{
+            type:String
         }
 
     }

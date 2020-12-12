@@ -20,7 +20,7 @@ const entrepreneurSchema = new mongoose.Schema(
             required: false
         },
         confirmed: {
-            type: DataTypes.BOOLEAN,
+            type: Boolean,
             defaultValue: false,
           },
         venture_name: {
@@ -68,6 +68,9 @@ const entrepreneurSchema = new mongoose.Schema(
         job_provider:{
             type:Boolean,
             required:false
+        },
+        session_id:{
+            type:String
         }
 
 

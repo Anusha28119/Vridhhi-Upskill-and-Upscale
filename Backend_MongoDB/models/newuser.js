@@ -20,7 +20,7 @@ const newUserSchema = new mongoose.Schema(
             required: true
         },
         confirmed: {
-            type: DataTypes.BOOLEAN,
+            type: Boolean,
             defaultValue: false,
           },
         category: {

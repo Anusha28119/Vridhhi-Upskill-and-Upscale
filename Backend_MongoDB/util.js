@@ -28,30 +28,40 @@ jwt.sign(
       });
     },
   );*/
-  var nodemailer = require("nodemailer");
+  "use strict";
+  const nodemailer = require("nodemailer");
 
-module.exports.send_email = (options) => {
+module.exports.send_email = () => {
       var transporter = nodemailer.createTransport({
           service:"gmail",
-          host: "smtp.gmail.com",
+       //   host: "smtp.gmail.com",
+          secure: false, 
           auth: {
-            user: "vriddhiuplscale@gmail.com",
-            pass: "devhxzcikqosvkrs"
+            user: "vriddhiuplscale",
+            pass: "website@123"
+          },
+          tls: {
+            rejectUnauthorized: false
           }
         });
 
-        var mail = {
-          from: "vriddhiuplscale@gmail.com",
-          to: options.to,
-          subject: options.subject,
-          text: options.text
+        const mail = {
+          from: "vriddhiuplscale",
+          to: "sumedhasachdev",
+          subject: "HELLO",
+          text: "Hi"
         };
 
-        transporter.sendMail(mail, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            // console.log('Email sent: ' + info.response);
+        transporter.sendEMail = function (mail) {
+            return new Promise(function (resolve, reject) {
+              transporter.sendMail(mail, (error, info) => {
+                if (error) {
+                  reject(error);
+                } else {
+                  resolve("The message was sent!");
+                }
+              });
+            });
           }
-        });
+       
 }

@@ -20,7 +20,7 @@ const investorSchema = new mongoose.Schema(
             required: false
         },
         confirmed: {
-            type: DataTypes.BOOLEAN,
+            type: Boolean,
             defaultValue: false,
           },
         investment_budget: {
@@ -51,6 +51,9 @@ const investorSchema = new mongoose.Schema(
             type: String,
             required: false,
             lowercase: true,
+        },
+        session_id:{
+            type:String
         }
 
 

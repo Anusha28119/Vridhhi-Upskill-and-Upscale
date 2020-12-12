@@ -13,8 +13,11 @@ const job_provider_profiles = require('./models/job_provider_profiles');
 const { db } = require('./models/seeker');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-var {send_email}=require('./util.js')
-import nodemailer from 'nodemailer';
+const {send_email}=require('./util.js');
+const nodemailer=require('nodemailer');
+//import nodemailer from 'nodemailer';
+const catchAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
 
 
 const mailgun = require('mailgun-js');
@@ -35,6 +38,7 @@ const requireLogin =(req,res, next) =>{
     {
         return res.redirect('/login')
     }
+    
     next();
 
 }
@@ -62,11 +66,11 @@ app.get('/login', (req,res) => {
     res.render('users/login')
 })
 
-app.get('/myprofile_seeker',requireLogin,(req,res) => {
+// app.get('/myprofile_seeker',requireLogin,(req,res) => {
     
-    //const {user}=req.params;
-    res.render('users/profile_seeker');
-})
+//     //const {user}=req.params;
+//     res.render('users/profile_seeker');
+// })
 
 
 app.get('/profile', function(req, res, next) {
@@ -78,7 +82,7 @@ app.get('/profile', function(req, res, next) {
     res.render('users/myprofile_seeker', { title: 'profile', user: user });
 });
 
-app.post('/login', async(req,res) => {
+app.post('/login', catchAsync(async(req,res) => {
     const{email, password, User} = req.body;
     console.log(User);
     if(User == 'seeker'){
@@ -89,25 +93,19 @@ app.post('/login', async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            await user.save()
+            console.log(user.session_id)
+            console.log(req.session.user_id)
             //res.send(user);
             console.log(user);
             global.User_profile=user;
             //console.log(users);
             const users = await seeker.findOne({email});
+            //user.session_id=user._id;
+            //await user.save()
             res.render('users/profile_seeker', {users:users});
-                //var userr = req.user;
-                //userr._id = encrypt(userr._id);
-                //res.render('users/myprofile_seeker', {
-                  //  user: userr
-                //});
-            
-            
-            //res.redirect('/myprofile_seeker');
-            //var user = req.user;
-
-    //you probably also want to pass this to your view
-          //res.render('users/myprofile_seeker', { title: 'profile', user: user });
           }
          else{
            res.status(401).send('Incorrect username or password. Please try again!');  
@@ -122,7 +120,9 @@ app.post('/login', async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            await user.save()
             const users = await investor.findOne({email});
             res.render('users/profile_investor', {users:users});
             //res.redirect('/secret')
@@ -139,12 +139,17 @@ app.post('/login', async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            await user.save()
             const users = await job_provider_main.findOne({email});
             var x = users.org_name;
             console.log(x);
-            const userrr = await job_provider_profiles.find({org_name:x});
-            res.render('users/profile_job_providers', {users:users,userrr:userrr});
+            const userr = await job_provider_profiles.find({org_name:x});
+            // userr.session_id=user._id;
+            // await userr.save()
+            // console.log(userr)
+            res.render('users/profile_job_providers', {users:users,userrr:userr});
             //res.redirect('/secret')
         }
        else{
@@ -159,7 +164,11 @@ app.post('/login', async(req,res) => {
          }else{
          const validPassword= await bcrypt.compare(password, user.password);
          if(validPassword){
+            user.session_id=user._id;
             req.session.user_id=user._id;
+            console.log(user.session_id)
+            console.log(req.session.user_id)
+            await user.save()
             const users = await entrepreneur.findOne({email});
             res.render('users/profile_entrepreneur', {users:users});
 
@@ -171,22 +180,48 @@ app.post('/login', async(req,res) => {
          }
     }
 
-})
+}))
 
-// //app.get('/myprofile_seeker',requireLogin,async(req,res) => {
+app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
+}))
 
 //     res.render('users/profile_seeker')
 // })
-app.get('/confirmation', async (req, res) => {
+/*app.get('/confirmation', async (req, res) => {
+    let testAccount = await nodemailer.createTestAccount();
+
    // id="vriddhiupscale@gmail.com"
     /*try {
       const { user: { email } } = jwt.verify(req.params.token, EMAIL_SECRET);
       await models.User.update({ confirmed: true }, { where: { email } });
     } catch (e) {
       res.send('error');
-    }*/
-    res.status(202).send("HH")
-    try {
+    }
+  //  res.status(202).send("HH")let transporter = nodemailer.createTransport({
+            let transporter = nodemailer.createTransport({
+                service: "Gmail",
+    // true for 465, false for other ports
+        auth: {
+            user: "vriddhiupscale@gmail.com", // generated ethereal user
+            pass: "website@123", // generated ethereal password
+             },
+        });
+
+ // send mail with defined transport object
+        let info = await transporter.sendMail({
+         from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+         to: "ishasachdev92@gmail.com", // list of receivers
+        subject: "Hello", // Subject line
+        text: "Hello, Namaste", // plain text body
+        html: "<b>Hello, Namaste</b>", // html body
+        });
+
+        console.log("Message sent: %s", info.messageId);
+ // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+ // Preview only available when sending through an Ethereal account
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  /*  try {
         console.log("Hello");
         send_email({
             to: "sumedhasachdev@gmail.com",
@@ -198,50 +233,95 @@ app.get('/confirmation', async (req, res) => {
         res.status(200).send("Error!!! Please try again later.");
     }
 
-  
+    main().catch(console.error);
     return res.redirect('http://localhost:3000/login');
   });
-app.get('/seekers/resume',requireLogin,async(req,res) => {
+ // catch(console.error);
+  app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
+}))*/
+
+app.get('/myprofile_provider',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const users = await job_provider_main.findOne({session_id:x});
+            var y = users.org_name;
+            console.log(y);
+            const userr = await job_provider_profiles.find({org_name:y});
+            // userr.session_id=user._id;
+            // await userr.save()
+            // console.log(userr)
+            res.render('users/profile_job_providers', {users:users,userrr:userr});
+ })
+
+app.get('/myprofile_investor',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await investor.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_investor',{users:user})
+ })
+
+app.get('/myprofile_seeker',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_seeker',{users:user})
+ })
+
+app.get('/myprofile_entrepreneur',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await entrepreneur.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_entrepreneur',{users:user})
+ })
+
+app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
     res.render('users/resume_building')
-})
+}))
 
-app.get('/seekers/skills', requireLogin, async (req, res) => {
+app.get('/seekers/skills', requireLogin, catchAsync(async (req, res) => {
     res.render('users/skills')
-})
+}))
 
-app.get('/seekers/scholarships', requireLogin,async (req, res) => {
+app.get('/seekers/scholarships', requireLogin, catchAsync(async (req, res) => {
     res.render('users/scholarships')
-})
+}))
 
-app.get('/seekers/interview_prep', requireLogin,async (req, res) => {
+app.get('/seekers/interview_prep', requireLogin, catchAsync(async (req, res) => {
     res.render('users/interview_prep')
-})
+}))
 
-app.get('/about_us', async (req, res) => {
+app.get('/about_us', catchAsync(async (req, res) => {
     res.render('users/about')
-})
+}))
 
-app.get('/contact_us', async (req, res) => {
+app.get('/contact_us', catchAsync(async (req, res) => {
     res.render('users/contact')
-})
+}))
 
-app.get('/seekers/quiz', requireLogin, async (req, res) => {
+app.get('/seekers/quiz', requireLogin, catchAsync(async (req, res) => {
     res.render('users/quiz_main')
-})
+}))
 
-app.get('/seekers/quizCPP', requireLogin, async (req, res) => {
+app.get('/seekers/quizCPP', requireLogin, catchAsync(async (req, res) => {
     res.render('users/quiz_cpp')
-})
+}))
 
-app.get('/seekers/quizHTML', requireLogin, async (req, res) => {
+app.get('/seekers/quizHTML', requireLogin, catchAsync(async (req, res) => {
     res.render('users/quiz_HTML')
-})
+}))
 
-app.get('/seekers/quizPy', requireLogin, async (req, res) => {
+app.get('/seekers/quizPy', requireLogin, catchAsync(async (req, res) => {
     res.render('users/quiz_Py')
-})
+}))
 
-app.get('/seekers', requireLogin, async(req,res) => {
+app.get('/seekers', requireLogin, catchAsync(async(req,res) => {
     const {tenth} = req.query
     if(tenth){
         const users = await seeker.find({tenth})
@@ -252,9 +332,9 @@ app.get('/seekers', requireLogin, async(req,res) => {
         res.render('users/view_seeker',{users, tenth: 'All'})
 
     }
-})
+}))
 
-app.get('/seekers1', requireLogin, async (req, res) => {
+app.get('/seekers1', requireLogin, catchAsync(async (req, res) => {
     const { twelfth } = req.query
     if (twelfth) {
         const users = await seeker.find({ twelfth })
@@ -265,9 +345,9 @@ app.get('/seekers1', requireLogin, async (req, res) => {
         res.render('users/view_seeker', { users, twelfth: 'All' })
 
     }
-})
+}))
 
-app.get('/seekers2', requireLogin, async (req, res) => {
+app.get('/seekers2', requireLogin, catchAsync(async (req, res) => {
     const { graduation } = req.query
     if (graduation) {
         const users = await seeker.find({ graduation })
@@ -278,9 +358,9 @@ app.get('/seekers2', requireLogin, async (req, res) => {
         res.render('users/view_seeker', { users, graduation: 'All' })
 
     }
-})
+}))
 
-app.get('/seekers3', requireLogin, async (req, res) => {
+app.get('/seekers3', requireLogin, catchAsync(async (req, res) => {
     const { post_graduation } = req.query
     if (post_graduation) {
         const users = await seeker.find({ post_graduation })
@@ -291,9 +371,9 @@ app.get('/seekers3', requireLogin, async (req, res) => {
         res.render('users/view_seeker', { users, post_graduation: 'All' })
 
     }
-})
+}))
 
-app.get('/seekers4', requireLogin, async (req, res) => {
+app.get('/seekers4', requireLogin, catchAsync(async (req, res) => {
     const { gold_badge } = req.query
     if (gold_badge) {
         const users = await seeker.find({ gold_badge })
@@ -304,9 +384,9 @@ app.get('/seekers4', requireLogin, async (req, res) => {
         res.render('users/view_seeker', { users, gold_badge: 'All' })
 
     }
-})
+}))
 
-app.get('/seekers5', requireLogin, async (req, res) => {
+app.get('/seekers5', requireLogin, catchAsync(async (req, res) => {
     const { silver_badge } = req.query
     if (silver_badge) {
         const users = await seeker.find({ silver_badge })
@@ -317,9 +397,9 @@ app.get('/seekers5', requireLogin, async (req, res) => {
         res.render('users/view_seeker', { users, silver_badge: 'All' })
 
     }
-})
+}))
 
-app.get('/seekers6', requireLogin, async (req, res) => {
+app.get('/seekers6', requireLogin, catchAsync(async (req, res) => {
     const { bronze_badge } = req.query
     if (bronze_badge) {
         const users = await seeker.find({ bronze_badge })
@@ -330,9 +410,9 @@ app.get('/seekers6', requireLogin, async (req, res) => {
         res.render('users/view_seeker', { users, bronze_badge: 'All' })
 
     }
-})
+}))
 
-app.get('/investors1', requireLogin,async (req, res) => {
+app.get('/investors1', requireLogin, catchAsync(async (req, res) => {
     const { profit_sharing } = req.query
     if (profit_sharing) {
         const users = await investor.find({ profit_sharing })
@@ -343,9 +423,9 @@ app.get('/investors1', requireLogin,async (req, res) => {
         res.render('users/view_investor', { users, profit_sharing: 'All' })
 
     }
-})
+}))
 
-app.get('/investors2', requireLogin, async (req, res) => {
+app.get('/investors2', requireLogin, catchAsync(async (req, res) => {
     const { preferred_field_first } = req.query
     if (preferred_field_first) {
         const users = await investor.find({ preferred_field_first })
@@ -356,9 +436,9 @@ app.get('/investors2', requireLogin, async (req, res) => {
         res.render('users/view_investor', { users, preferred_field_first: 'All' })
 
     }
-})
+}))
 
-app.get('/investors3', requireLogin, async (req, res) => {
+app.get('/investors3', requireLogin, catchAsync(async (req, res) => {
     const { preferred_field_second } = req.query
     if (preferred_field_second) {
         const users = await investor.find({ preferred_field_second })
@@ -369,9 +449,9 @@ app.get('/investors3', requireLogin, async (req, res) => {
         res.render('users/view_investor', { users, preferred_field_second: 'All' })
 
     }
-})
+}))
 
-app.get('/investors4', requireLogin, async (req, res) => {
+app.get('/investors4', requireLogin, catchAsync(async (req, res) => {
     const { preferred_qualification } = req.query
     if (preferred_qualification) {
         const users = await investor.find({ preferred_qualification })
@@ -382,9 +462,9 @@ app.get('/investors4', requireLogin, async (req, res) => {
         res.render('users/view_investor', { users, preferred_qualification: 'All' })
 
     }
-})
+}))
 
-app.get('/providers1', requireLogin, async (req, res) => {
+app.get('/providers1', requireLogin, catchAsync(async (req, res) => {
     const { org_name } = req.query
     if (org_name) {
         const users = await job_provider_profiles.find({ org_name })
@@ -395,9 +475,9 @@ app.get('/providers1', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, org_name: 'All' })
 
     }
-})
+}))
 
-app.get('/providers2', requireLogin, async (req, res) => {
+app.get('/providers2', requireLogin, catchAsync(async (req, res) => {
     const { job_profile } = req.query
     if (job_profile) {
         const users = await job_provider_profiles.find({ job_profile })
@@ -408,9 +488,9 @@ app.get('/providers2', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, job_profile: 'All' })
 
     }
-})
+}))
 
-app.get('/providers3', requireLogin, async (req, res) => {
+app.get('/providers3', requireLogin, catchAsync(async (req, res) => {
     const { profile_location } = req.query
     if (profile_location) {
         const users = await job_provider_profiles.find({ profile_location })
@@ -421,9 +501,9 @@ app.get('/providers3', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, profile_location: 'All' })
 
     }
-})
+}))
 
-app.get('/providers4', requireLogin, async (req, res) => {
+app.get('/providers4', requireLogin, catchAsync(async (req, res) => {
     const { req_tenth } = req.query
     if (req_tenth) {
         const users = await job_provider_profiles.find({ req_tenth })
@@ -434,9 +514,9 @@ app.get('/providers4', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, req_tenth: 'All' })
 
     }
-})
+}))
 
-app.get('/providers5', requireLogin, async (req, res) => {
+app.get('/providers5', requireLogin, catchAsync(async (req, res) => {
     const { req_twelfth } = req.query
     if (req_twelfth) {
         const users = await job_provider_profiles.find({ req_twelfth })
@@ -447,9 +527,9 @@ app.get('/providers5', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, req_twelfth: 'All' })
 
     }
-})
+}))
 
-app.get('/providers6', requireLogin, async (req, res) => {
+app.get('/providers6', requireLogin, catchAsync(async (req, res) => {
     const { req_graduation_degree } = req.query
     if (req_graduation_degree) {
         const users = await job_provider_profiles.find({ req_graduation_degree })
@@ -460,9 +540,9 @@ app.get('/providers6', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, req_graduation_degree: 'All' })
 
     }
-})
+}))
 
-app.get('/providers7', requireLogin, async (req, res) => {
+app.get('/providers7', requireLogin, catchAsync(async (req, res) => {
     const { req_post_graduation_degree } = req.query
     if (req_post_graduation_degree) {
         const users = await job_provider_profiles.find({ req_post_graduation_degree })
@@ -473,9 +553,9 @@ app.get('/providers7', requireLogin, async (req, res) => {
         res.render('users/view_provider', { users, req_post_graduation_degree: 'All' })
 
     }
-})
+}))
 
-app.get('/entrepreneurs1', requireLogin, async (req, res) => {
+app.get('/entrepreneurs1', requireLogin, catchAsync(async (req, res) => {
     const { category } = req.query
     if (category) {
         const users = await entrepreneur.find({ category })
@@ -486,9 +566,9 @@ app.get('/entrepreneurs1', requireLogin, async (req, res) => {
         res.render('users/index', { users, category: 'All' })
 
     }
-})
+}))
 
-app.get('/entrepreneurs2', requireLogin, async (req, res) => {
+app.get('/entrepreneurs2', requireLogin, catchAsync(async (req, res) => {
     const { working_location } = req.query
     if (working_location) {
         const users = await entrepreneur.find({ working_location })
@@ -499,7 +579,7 @@ app.get('/entrepreneurs2', requireLogin, async (req, res) => {
         res.render('users/index', { users, working_location: 'All' })
 
     }
-})
+}))
 
 
 app.post('/logout', (req,res) => {
@@ -508,7 +588,7 @@ app.post('/logout', (req,res) => {
 })
 
 
-app.post('/seekers', async (req,res) => {
+app.post('/seekers', catchAsync(async (req,res) => {
     
     const hash_pwd = await bcrypt.hash(req.body.password,12);
     const newSeeker = new seeker({
@@ -533,12 +613,49 @@ app.post('/seekers', async (req,res) => {
     await newSeeker.save()
     req.session.user_id=newSeeker._id;
     console.log(newSeeker)
-    res.render('users/profile_seeker',{users:newSeeker})
+    res.render('users/email_verif',{users:newSeeker})
+     try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
 
     
-})
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
 
-app.post('/entrepreneurs', async (req, res) => {
+    
+}))
+
+app.post('/entrepreneurs', catchAsync(async (req, res) => {
     const hash_pwd = await bcrypt.hash(req.body.password,12);
     const newEntrepreneur = new entrepreneur({
         name: req.body.name,
@@ -560,10 +677,47 @@ app.post('/entrepreneurs', async (req, res) => {
     await newEntrepreneur.save()
     req.session.user_id=newEntrepreneur._id;
     console.log(newEntrepreneur)
-    res.render('users/profile_entrepreneur',{users:newEntrepreneur})
-})
+    res.render('users/email_verif',{users:newEntrepreneur})
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
 
-app.post('/investors', async (req, res) => {
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
+}))
+
+app.post('/investors', catchAsync(async (req, res) => {
     const hash_pwd = await bcrypt.hash(req.body.password,12);
     const newInvestor = new investor({
         name: req.body.name,
@@ -580,21 +734,50 @@ app.post('/investors', async (req, res) => {
     await newInvestor.save()
     req.session.user_id=newInvestor._id;
     console.log(newInvestor)
-    res.render('users/profile_investor',{users:newInvestor})
-})
+    res.render('users/email_verif',{users:newInvestor})
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
 
-app.get('/register/seeker', (req,res) => {
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm yout Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
+}))
+
+app.get('/register/seeker', async(req,res) => {
     console.log(req.body.selectpicker)
     res.render('users/new_seeker')
-    const data = {
-        from: 'noreply@Vriddhi.com',
-        to: req.body.email,
-        subject: 'Email Account Verification',
-        text: 'Email account verification initiated'
-    };
-    mg.messages().send(data, function (error, body) {
-        console.log(body);
-    });
+
 })
 
 app.get('/home',(req,res) => {
@@ -609,7 +792,7 @@ app.get('/register/investor', (req, res) => {
     res.render('users/new_investor')
 })
 
-app.post('/job_providers', async (req,res) => {
+app.post('/job_providers', catchAsync(async (req,res) => {
     const hash_pwd = await bcrypt.hash(req.body.password,12);
     const newjob_provider_main = new job_provider_main({
         org_name: req.body.org_name,
@@ -625,8 +808,45 @@ app.post('/job_providers', async (req,res) => {
     req.session.user_id=newjob_provider_main._id;
     console.log(newjob_provider_main)
     res.redirect('/register/job_provider_profiles')
+    try{
+        console.log("Inside mailer-Hello")
     
-})
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello,please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
+    
+}))
 
 app.get('/register/job_provider', (req,res) => {
     res.render('users/new_provider_main')
@@ -638,7 +858,7 @@ app.get('/register/job_provider_profiles', (req,res) => {
 })
 
 
-app.post('/job_provider_profiles', async (req,res) => {
+app.post('/job_provider_profiles', catchAsync(async (req,res) => {
     const newjob_provider_profiles = new job_provider_profiles({
         org_name: req.body.org_name,
         job_profile: req.body.job_profile,
@@ -662,24 +882,61 @@ app.post('/job_provider_profiles', async (req,res) => {
     console.log(x);
     const userjob_provider_main = await job_provider_main.findOne({org_name:x});
     const userrr = await job_provider_profiles.find({org_name:x});
-    res.render('users/profile_job_providers',{users:userjob_provider_main,userrr:userrr})
+    res.render('users/email_verif',{users:userjob_provider_main,userrr:userrr})
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
     
     
-})
+}))
 
 app.get('/register/job_provider_profiles', (req,res) => {
     res.render('users/new_provider_profiles')
 })
 
-app.get('/newUser', requireLogin,async (req,res) => {
+app.get('/newUser', requireLogin, catchAsync(async (req,res) => {
 
 
     const users = await newUser.find({})
     res.render('users/index', {users})
     
-})
+}))
 
-app.get('/view/seekers', requireLogin,async (req, res) => {
+app.get('/view/seekers', requireLogin, catchAsync(async (req, res) => {
 
 
     const dbo = seeker.find({})
@@ -687,9 +944,9 @@ app.get('/view/seekers', requireLogin,async (req, res) => {
     console.log(users)
     res.render('users/view_seeker', { users })
 
-})
+}))
 
-app.get('/view/investors', requireLogin, async (req, res) => {
+app.get('/view/investors', requireLogin, catchAsync(async (req, res) => {
 
 
     const dbo = investor.find({})
@@ -697,9 +954,9 @@ app.get('/view/investors', requireLogin, async (req, res) => {
     console.log(users)
     res.render('users/view_investor', { users })
 
-})
+}))
 
-app.get('/view/job-providers', requireLogin, async (req, res) => {
+app.get('/view/job-providers', requireLogin, catchAsync(async (req, res) => {
 
 
     const dbo = job_provider_profiles.find({})
@@ -707,21 +964,30 @@ app.get('/view/job-providers', requireLogin, async (req, res) => {
     console.log(users)
     res.render('users/view_provider', { users })
 
-})
+}))
 
-app.get('/view/entrepreneurs', requireLogin, async (req, res) => {
+app.get('/view/entrepreneurs', requireLogin, catchAsync(async (req, res) => {
 
 
     const dbo = entrepreneur.find({})
     const users = await dbo
     console.log(users)
     res.render('users/index', { users })
-})
+}))
 
 app.get('/secret',requireLogin,(req,res) => {
     
     //const {user}=req.params;
     res.render('users/secret',user);
+})
+
+app.all('*', (req,res,next) => {
+    next(new ExpressError("Page not found",404))
+})
+
+app.use((err,req,res,next) => {
+    const {statusCode=500, message='Something went wrong'} = err;
+    res.status(statusCode).send(message);
 })
 
 app.listen(3000, ()=> {
