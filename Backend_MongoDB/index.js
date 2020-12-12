@@ -51,12 +51,6 @@ app.get('/login', (req,res) => {
     res.render('users/login')
 })
 
-// app.get('/myprofile_seeker',requireLogin,(req,res) => {
-    
-//     //const {user}=req.params;
-//     res.render('users/profile_seeker');
-// })
-
 
 app.get('/profile', function(req, res, next) {
 
@@ -749,6 +743,27 @@ app.put('/editSeeker',requireLogin,catchAsync(async(req,res)=>{
     req.session.user_id = user._id;
     console.log(user)
     res.render('users/profile_seeker', { users: user })
+}))
+
+app.get('/editProvider', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await job_provider_main.findOne({ session_id: x });
+    console.log("Inside edit provider main")
+    res.render('users/editprovider_main', { users: user })
+}))
+
+app.post('/editProvider', requireLogin, catchAsync(async (req, res) => {
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await job_provider_main.findOneAndUpdate({ session_id: x }, req.body, { runValidators: true, new: true });
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    var y = user.org_name;
+    console.log(y);
+    const userr = await job_provider_profiles.find({ org_name: y });
+    res.render('users/profile_job_providers', { users: user, userrr: userr });
+    
 }))
 
 app.all('*', (req,res,next) => {
