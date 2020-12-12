@@ -53,7 +53,7 @@
 
         <div class="mb-2">
         <label for="investment_budget">Enter your investment budget(in rupees)</label>
-        <input class="form-control" type="number" name="investment_budget" id="investment_budget" required><br />
+        <input class="form-control" type="number" name="investment_budget" id="investment_budget" value="<%= users.investment_budget %>" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -61,7 +61,7 @@
 
         <div class="mb-2">
         <label for="expected_return">Enter your expected return(in rupees)</label>
-        <input class="form-control" type="number" name="expected_return" id="expected_return" required><br />
+        <input class="form-control" type="number" name="expected_return" id="expected_return" value="<%= users.expected_return %>" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
