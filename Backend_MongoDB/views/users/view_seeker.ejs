@@ -18,7 +18,7 @@
 
         <tr class="table-light">
             <td><%= user.name %></td>
-            <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
+            <td><div class="card"><a href="mailto:<%= user.email %>"><%= user.email %></a></div></td>
             <td><a href="/seekers?tenth=<%= user.tenth %>"><%= user.tenth %></a></td>
             <td><a href="/seekers1?twelfth=<%= user.twelfth%>"><%= user.twelfth%></a></td>
             <td><a href="/seekers2?graduation=<%= user.graduation %>"><%= user.graduation %></a></td>
