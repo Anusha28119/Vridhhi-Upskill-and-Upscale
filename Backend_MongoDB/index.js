@@ -13,6 +13,9 @@ const job_provider_profiles = require('./models/job_provider_profiles');
 const { db } = require('./models/seeker');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const {send_email}=require('./util.js');
+const nodemailer=require('nodemailer');
+//import nodemailer from 'nodemailer';
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -38,6 +41,17 @@ const requireLogin =(req,res, next) =>{
     next();
 
 }
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: "vriddhiupscale@gmail.com",
+      pass: "website@123",
+    },
+  });
+  const SECRET = 'aslkdjlkaj10830912039jlkoaiuwerasdjflkasd';
+const SECRET_2 = 'ajsdklfjaskljgklasjoiquw01982310nlksas;sdlkfj';
+const EMAIL_SECRET = 'asdf1093KMnzxcvnkljvasdu09123nlasdasdf';
+
 
 mongoose.connect('mongodb://localhost/Vriddhi_newUser', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
@@ -163,6 +177,61 @@ app.post('/login', catchAsync(async(req,res) => {
 
 app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
 }))
+
+//     res.render('users/profile_seeker')
+// })
+/*app.get('/confirmation', async (req, res) => {
+    let testAccount = await nodemailer.createTestAccount();
+
+   // id="vriddhiupscale@gmail.com"
+    /*try {
+      const { user: { email } } = jwt.verify(req.params.token, EMAIL_SECRET);
+      await models.User.update({ confirmed: true }, { where: { email } });
+    } catch (e) {
+      res.send('error');
+    }
+  //  res.status(202).send("HH")let transporter = nodemailer.createTransport({
+            let transporter = nodemailer.createTransport({
+                service: "Gmail",
+    // true for 465, false for other ports
+        auth: {
+            user: "vriddhiupscale@gmail.com", // generated ethereal user
+            pass: "website@123", // generated ethereal password
+             },
+        });
+
+ // send mail with defined transport object
+        let info = await transporter.sendMail({
+         from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+         to: "ishasachdev92@gmail.com", // list of receivers
+        subject: "Hello", // Subject line
+        text: "Hello, Namaste", // plain text body
+        html: "<b>Hello, Namaste</b>", // html body
+        });
+
+        console.log("Message sent: %s", info.messageId);
+ // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+ // Preview only available when sending through an Ethereal account
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  /*  try {
+        console.log("Hello");
+        send_email({
+            to: "sumedhasachdev@gmail.com",
+            subject: "Here is your token  : ",
+            text: "Token is : " 
+        });
+        res.send("Token was sent successfully to you email address");
+    } catch (err) {
+        res.status(200).send("Error!!! Please try again later.");
+    }
+
+    main().catch(console.error);
+    return res.redirect('http://localhost:3000/login');
+  });
+ // catch(console.error);
+  app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
+}))*/
 
 app.get('/myprofile_provider',requireLogin,async(req,res) => {
 
@@ -537,7 +606,44 @@ app.post('/seekers', catchAsync(async (req,res) => {
     await newSeeker.save()
     req.session.user_id=newSeeker._id;
     console.log(newSeeker)
-    res.render('users/profile_seeker',{users:newSeeker})
+    res.render('users/email_verif',{users:newSeeker})
+     try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
 
     
 }))
@@ -564,7 +670,44 @@ app.post('/entrepreneurs', catchAsync(async (req, res) => {
     await newEntrepreneur.save()
     req.session.user_id=newEntrepreneur._id;
     console.log(newEntrepreneur)
-    res.render('users/profile_entrepreneur',{users:newEntrepreneur})
+    res.render('users/email_verif',{users:newEntrepreneur})
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
 }))
 
 app.post('/investors', catchAsync(async (req, res) => {
@@ -584,21 +727,50 @@ app.post('/investors', catchAsync(async (req, res) => {
     await newInvestor.save()
     req.session.user_id=newInvestor._id;
     console.log(newInvestor)
-    res.render('users/profile_investor',{users:newInvestor})
+    res.render('users/email_verif',{users:newInvestor})
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm yout Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
 }))
 
-app.get('/register/seeker', (req,res) => {
+app.get('/register/seeker', async(req,res) => {
     console.log(req.body.selectpicker)
     res.render('users/new_seeker')
-    const data = {
-        from: 'noreply@Vriddhi.com',
-        to: req.body.email,
-        subject: 'Email Account Verification',
-        text: 'Email account verification initiated'
-    };
-    mg.messages().send(data, function (error, body) {
-        console.log(body);
-    });
+
 })
 
 app.get('/home',(req,res) => {
@@ -629,6 +801,43 @@ app.post('/job_providers', catchAsync(async (req,res) => {
     req.session.user_id=newjob_provider_main._id;
     console.log(newjob_provider_main)
     res.redirect('/register/job_provider_profiles')
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello,please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
     
 }))
 
@@ -666,7 +875,44 @@ app.post('/job_provider_profiles', catchAsync(async (req,res) => {
     console.log(x);
     const userjob_provider_main = await job_provider_main.findOne({org_name:x});
     const userrr = await job_provider_profiles.find({org_name:x});
-    res.render('users/profile_job_providers',{users:userjob_provider_main,userrr:userrr})
+    res.render('users/email_verif',{users:userjob_provider_main,userrr:userrr})
+    try{
+        console.log("Inside mailer-Hello")
+    
+    let testAccount = await nodemailer.createTestAccount();
+
+    
+     let transporter = nodemailer.createTransport({
+         service: "Gmail",
+    auth: {
+      user: "vriddhiupscale@gmail.com", // generated ethereal user
+      pass: "website@123", // generated ethereal password
+    },
+  });
+ var x=req.session.user_id;
+ console.log("Session Id")
+    console.log(x)
+    const user = await seeker.findOne({session_id:x});
+    console.log("email")
+    console.log(req.body.email);
+  
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Vriddhi Upscale" <vriddhiupscale@gmail.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: "Hello, please confirm your Email Id", // Subject line
+    text: "Click on the link to login: http://localhost:3000/login", // plain text body
+    html: "<p>Click on the link to login: http://localhost:3000/login</p>", // html body
+  });
+  
+ 
+  console.log("Message sent: %s", info.messageId); 
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  
+    }catch(err){
+        console.log(err);
+    }
     
     
 }))
@@ -743,6 +989,39 @@ app.put('/editSeeker',requireLogin,catchAsync(async(req,res)=>{
     req.session.user_id = user._id;
     console.log(user)
     res.render('users/profile_seeker', { users: user })
+}))
+app.get('/editInvestor',requireLogin, catchAsync(async(req,res) =>{
+    var x = req.session.user_id;
+    const user = await investor.findOne({ session_id: x });
+    console.log("Inside edit investor")
+    res.render('users/edit_investor', { users: user })
+}))
+
+app.put('/editInvestor',requireLogin,catchAsync(async(req,res)=>{
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await investor.findOneAndUpdate({ session_id: x },req.body, {runValidators:true,new:true});
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    res.render('users/profile_investor', { users: user })
+}))
+
+app.get('/editEntrepreneur',requireLogin, catchAsync(async(req,res) =>{
+    var x = req.session.user_id;
+    const user = await entrepreneur.findOne({ session_id: x });
+    console.log("Inside edit entrepreneur")
+    res.render('users/edit_entrepreneur', { users: user })
+}))
+
+app.put('/editEntrepreneur',requireLogin,catchAsync(async(req,res)=>{
+    console.log(req.body)
+    var x = req.session.user_id;
+    const user = await entrepreneur.findOneAndUpdate({ session_id: x },req.body, {runValidators:true,new:true});
+    await user.save()
+    req.session.user_id = user._id;
+    console.log(user)
+    res.render('users/profile_entrepreneur', { users: user })
 }))
 
 app.get('/editProvider', requireLogin, catchAsync(async (req, res) => {

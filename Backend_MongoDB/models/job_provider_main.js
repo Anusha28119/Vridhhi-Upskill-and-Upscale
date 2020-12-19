@@ -23,6 +23,10 @@ const providerMainSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        confirmed: {
+            type: Boolean,
+            defaultValue: false,
+          },
         vacancies: {
             type: Number,
             required: false

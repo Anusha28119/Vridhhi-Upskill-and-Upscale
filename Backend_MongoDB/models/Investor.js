@@ -19,6 +19,10 @@ const investorSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        confirmed: {
+            type: Boolean,
+            defaultValue: false,
+          },
         investment_budget: {
             type:Number,
             required:false
