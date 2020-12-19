@@ -7,7 +7,7 @@
 
         <div class="mb-2 mt-3">
         <label for="name">Enter full name</label>
-        <input class="form-control" type="text" name="name" id="name" pattern="^(?:((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-.\s])){1,}(['’,\-\.]){0,1}){2,}(([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-. ]))*(([ ]+){0,1}(((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){1,})(['’\-,\.]){0,1}){2,}((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){2,})?)*)$" required><br />
+        <input class="form-control" type="text" name="name" id="name" pattern="[A-Z][A-Za-z ]+[A-Z]*[A-Za-z]*" required><br />
     <div class="valid-feedback">
         Looks good!
     </div>
@@ -29,7 +29,7 @@
 
         <div class="mb-2">
         <label for="email">Enter email address (abc@example.com)</label>
-        <input class="form-control" type="email" name="email" id="email" required><br />
+        <input class="form-control" type="email" name="email" id="email" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -39,19 +39,19 @@
         </div>
 
         <div class="mb-2">
-        <label for="password">Enter password</label>
-        <input class="form-control" type="password" name="password" id="password" required><br />
+        <label for="password">Enter password (Must contain 8 or more characters that are of at least one number, and one uppercase and lowercase letter)</label>
+        <input class="form-control" type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
         <div class="invalid-feedback">
-            Please enter a password
+            Please enter the password containing 8 or more characters at least one number, and one uppercase and lowercase letter
         </div>
         </div>
 
         <div class="mb-2">
         <label for="investment_budget">Enter your investment budget(in rupees)</label>
-        <input class="form-control" type="number" name="investment_budget" id="investment_budget" required><br />
+        <input class="form-control" type="text" name="investment_budget" pattern="[1-9]+[0-9]+" id="investment_budget" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -59,7 +59,7 @@
 
         <div class="mb-2">
         <label for="expected_return">Enter your expected return(in rupees)</label>
-        <input class="form-control" type="number" name="expected_return" id="expected_return" required><br />
+        <input class="form-control" type="text" name="expected_return" pattern="[0-9]+" id="expected_return" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>

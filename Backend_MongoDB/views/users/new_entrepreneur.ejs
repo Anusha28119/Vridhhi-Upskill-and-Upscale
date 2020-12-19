@@ -7,7 +7,7 @@
         
         <div class="mb-2 mt-3">
         <label for="name">Enter full name</label>
-        <input class="form-control" type="text" name="name" id="name" pattern="^(?:((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-.\s])){1,}(['’,\-\.]){0,1}){2,}(([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-. ]))*(([ ]+){0,1}(((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){1,})(['’\-,\.]){0,1}){2,}((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){2,})?)*)$" required><br />
+        <input class="form-control" type="text" name="name" id="name" pattern="[A-Z][A-Za-z ]+[A-Z]*[A-Za-z]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -29,7 +29,7 @@
 
         <div class="mb-2">
         <label for="email">Enter email address (abc@example.com)</label>
-        <input class="form-control" type="email" name="email" id="email" required><br />
+        <input class="form-control" type="email" name="email" id="email" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -39,19 +39,22 @@
         </div>
 
         <div class="mb-2">
-        <label for="password">Enter password</label>
-        <input class="form-control" type="password" name="password" id="password" required><br />
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-        <div class="invalid-feedback">
-            Please enter a password
-        </div>
+            <label for="password">Enter password (Must contain 8 or more characters that are of at least one number, and one
+                uppercase and lowercase letter)</label>
+            <input class="form-control" type="password" name="password" id="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br />
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter the password containing 8 or more characters at least one number, and one uppercase and lowercase
+                letter
+            </div>
         </div>
 
         <div class="mb-2">
         <label for="venture_name">Enter the name of your venture/organisation/product</label>
-        <input class="form-control" type="text" name="venture_name" id="venture_name" pattern="^[a-zA-Z0-9]+$" required><br />
+        <input class="form-control" type="text" name="venture_name" id="venture_name" pattern="[A-Za-z0-9]+[A-Za-z0-9 ]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -62,7 +65,7 @@
 
         <div class="mb-2">
         <label for="team_leader">Enter the team leader's full name</label>
-        <input class="form-control" type="text" name="team_leader" id="team_leader" pattern="^(?:((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-.\s])){1,}(['’,\-\.]){0,1}){2,}(([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-. ]))*(([ ]+){0,1}(((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){1,})(['’\-,\.]){0,1}){2,}((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){2,})?)*)$" required><br />
+        <input class="form-control" type="text" name="team_leader" id="team_leader" pattern="[A-Z][A-Za-z ]+[A-Z]*[A-Za-z]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -73,7 +76,7 @@
 
         <div class="mb-2">
         <label for="brief_idea_overview">Brief Idea Overview : </label><br />
-        <textarea class="form-control" rows="5" cols="50" name="brief_idea_overview" id="brief_idea_overview" pattern="^[a-zA-Z0-9.,-]+$" required>
+        <textarea class="form-control" rows="5" cols="50" name="brief_idea_overview" id="brief_idea_overview" pattern="^[a-zA-Z0-9.,- ]+$" required>
         </textarea><br />
         <div class="valid-feedback">
             Looks good!
@@ -85,7 +88,7 @@
 
         <div class="mb-2">
         <label for="funding_required">Enter in rupees the funding required by your organisation</label>
-        <input class="form-control" type="number" name="funding_required" id="funding_required" required><br />
+        <input class="form-control" type="text" name="funding_required" id="funding_required" pattern="[1-9]+[0-9]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -124,7 +127,7 @@
 
         <div class="mb-2 date">
         <label for="current_number_of_employees">Enter the current no. of employees in your venture</label>
-        <input class="form-control" type="number" name="current_number_of_employees" id="current_number_of_employees" required><br />
+        <input class="form-control" type="number" name="current_number_of_employees" pattern="[0-9]+" id="current_number_of_employees" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -158,7 +161,7 @@
 
         <div class="mb-2">
         <label for="current_annual_turnover">Enter the current annual turnover (in rupees) of your venture (Enter 0 if still in ideation phase)</label>
-        <input class="form-control" type="number" name="current_annual_turnover" id="current_annual_turnover" required><br />
+        <input class="form-control" type="text" name="current_annual_turnover" pattern="[0-9]+" id="current_annual_turnover" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>

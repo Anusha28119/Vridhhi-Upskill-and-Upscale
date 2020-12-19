@@ -7,7 +7,7 @@
         
         <div class="mb-2 mt-3">
         <label for="name">Enter full name</label>
-        <input class="form-control" type="text" name="name" id="name" pattern="^(?:((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-.\s])){1,}(['’,\-\.]){0,1}){2,}(([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-. ]))*(([ ]+){0,1}(((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){1,})(['’\-,\.]){0,1}){2,}((([^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]'’,\-\.\s])){2,})?)*)$" required><br />
+        <input class="form-control" type="text" name="name" id="name" pattern="[A-Z][A-Za-z ]+[A-Z]*[A-Za-z]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -30,7 +30,7 @@
 
         <div class="mb-2">
         <label for="email">Enter email address (abc@example.com)</label>
-        <input class="form-control" type="email" name="email" id="email" required><br />
+        <input class="form-control" type="email" name="email" id="email" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -40,14 +40,17 @@
         </div>
 
         <div class="mb-2">
-        <label for="password">Enter password</label>
-        <input class="form-control" type="password" name="password" id="password" required><br />
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-        <div class="invalid-feedback">
-            Please enter a password
-        </div>
+            <label for="password">Enter password (Must contain 8 or more characters that are of at least one number, and one
+                uppercase and lowercase letter)</label>
+            <input class="form-control" type="password" name="password" id="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br />
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter the password containing 8 or more characters at least one number, and one uppercase and lowercase
+                letter
+            </div>
         </div>
 
         <div class="mb-2">
@@ -113,14 +116,15 @@
         <div class="mb-2">
         <label for="graduation_degree">Enter graduation qualification</label>
         <select class="select-picker form-control" name="graduation_degree" id="graduation_degree" disabled="disabled" required>
-            <option value="B. Tech" selected>B. Tech</option>
+            <option value="none" selected>Select</option>
+            <option value="B. Tech">B. Tech</option>
             <option value="BBA">BBA</option>
             <option value="B. Sc">B. Sc</option>
             <option value="MBBS">M.B.B.S.</option>
             <option value="B. Com">B. Com</option>
             <option value="B. Arch">B. Arch</option>
             <option value="other">Others</option>
-            <option value="none" selected>None</option>
+            
         </select><br />
         </div>
 
@@ -147,6 +151,7 @@
         <div class="mb-2">
         <label for="post_graduation_degree">Enter post-graduation qualification</label>
         <select class="select-picker form-control" id="post_graduation_degree" name="post_graduation_degree" disabled="disabled" required>
+            <option value="none" selected>Select</option>
             <option value="M. Tech" >M. Tech</option>
             <option value="MBA">MBA</option>
             <option value="M. Sc">M. Sc</option>
@@ -154,7 +159,7 @@
             <option value="M. Com">M. Com</option>
             <option value="M. Arch">M. Arch</option>
             <option value="other">Others</option>
-            <option value="none" selected>None</option>
+            
         </select><br />
         </div>
 

@@ -7,7 +7,7 @@
 
         <div class="mb-2 mt-3">
         <label for="org_name">Enter organisation name</label>
-        <input class="form-control" type="text" name="org_name" id="org_name" pattern="^[a-zA-Z0-9]+$" required><br/>
+        <input class="form-control" type="text" name="org_name" id="org_name" pattern="[a-zA-Z0-9]+[a-zA-Z0-9 ]+" required><br/>
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -18,7 +18,7 @@
 
         <div class="mb-2">
         <label for="job_profile">Enter job profile</label>
-        <input class="form-control" type="text" name="job_profile" id="job_profile" pattern="[a-zA-Z.,-]+" required><br/>
+        <input class="form-control" type="text" name="job_profile" id="job_profile" pattern="[a-zA-Z0-9]+[a-zA-Z0-9 ]+" required><br/>
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -29,7 +29,7 @@
 
         <div class="mb-2">
         <label for="vacancies">Enter the number of vacancies</label>
-        <input class="form-control" type="number" name="vacancies" id="vacancies" required><br />
+        <input class="form-control" type="text" name="vacancies" id="vacancies" pattern="[1-9]+[0-9]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -37,7 +37,7 @@
 
         <div class="mb-2">
         <label for="profile_compensation">Enter the profile compensation (in rupees)</label>
-        <input class="form-control" type="number" name="profile_compensation" id="profile_compensation" required><br />
+        <input class="form-control" type="text" name="profile_compensation" id="profile_compensation" pattern="[1-9]+[0-9]*" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>
@@ -56,7 +56,7 @@
  
         <div class="mb-2">
         <label for="brief_overview_of_profile">Enter the brief overview of profile</label>
-        <input class="form-control" type="textarea" name="brief_overview_of_profile" id="brief_overview_of_profile" pattern="^[a-zA-Z0-9.,-]+$" required><br />
+        <input class="form-control" type="textarea" name="brief_overview_of_profile" id="brief_overview_of_profile" pattern="[a-zA-Z0-9]+[a-zA-Z0-9 ]+" required><br />
         <div class="valid-feedback">
             Looks good!
         </div>

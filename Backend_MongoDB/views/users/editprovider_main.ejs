@@ -49,7 +49,7 @@
 
                 <div class="mb-2">
                     <label for="password">Enter password</label>
-                    <input class="form-control" type="password" name="password" id="password"   value="<%= users.password %>" required><br />
+                    <input class="form-control" type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  value="<%= users.password %>" required><br />
                 </div>
 
                 <div class="mb-2">
