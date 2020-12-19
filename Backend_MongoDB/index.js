@@ -863,6 +863,10 @@ app.post('/editProvider', requireLogin, catchAsync(async (req, res) => {
     
 }))
 
+app.get('/c', (req,res) => {
+    res.render('users/Captcha_test')
+})
+
 app.all('*', (req,res,next) => {
     next(new ExpressError("Page not found",404))
 })
@@ -873,9 +877,7 @@ app.use((err,req,res,next) => {
 })
 
 
-app.get('/c', (req,res) => {
-    res.render('users/Captcha_test')
-})
+
 
 
 
