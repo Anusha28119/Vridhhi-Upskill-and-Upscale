@@ -10,6 +10,7 @@ const { request } = require('http');
 const newUser = require('./models/newuser');
 const job_provider_main = require('./models/job_provider_main');
 const job_provider_profiles = require('./models/job_provider_profiles');
+const admin = require('./models/admin');
 const { db } = require('./models/seeker');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
@@ -75,10 +76,37 @@ app.get('/profile', function(req, res, next) {
     res.render('users/myprofile_seeker', { title: 'profile', user: user });
 });
 
+
 app.post('/login', catchAsync(async(req,res) => {
     const{email, password, User} = req.body;
     console.log(User);
-    if(User == 'seeker'){
+    if(User == 'admin'){
+        const user = await admin.findOne({email});
+         if(user==null)
+         {
+            res.send("Try again")
+         }else{
+         //const validPassword= await bcrypt.compare(password, user.password);
+         var validPassword;
+         if(user.password == password)
+            validPassword=1;
+        else
+        validPassword=0;
+         if(validPassword){
+            user.session_id=user._id;
+            req.session.user_id=user._id;
+            await user.save()
+            const users = await admin.findOne({email});
+            res.render('users/profile_admin', {users:users});
+            //res.redirect('/secret')
+        }
+       else{
+         res.redirect('/login')
+        }
+        }
+        
+    }
+    else if(User == 'seeker'){
          const user = await seeker.findOne({email});
          if(user==null)
          {
@@ -178,6 +206,14 @@ app.post('/login', catchAsync(async(req,res) => {
 app.get('/seekers/resume',requireLogin,catchAsync(async(req,res) => {
 }))
 
+app.get('/myprofile_admin',requireLogin,async(req,res) => {
+
+    var x=req.session.user_id;
+    console.log(x)
+    const user = await admin.findOne({session_id:x});
+    console.log(user);
+    res.render('users/profile_admin',{users:user})
+ })
 //     res.render('users/profile_seeker')
 // })
 /*app.get('/confirmation', async (req, res) => {
@@ -255,6 +291,7 @@ app.get('/myprofile_investor',requireLogin,async(req,res) => {
     console.log(user);
     res.render('users/profile_investor',{users:user})
  })
+
 
 app.get('/myprofile_seeker',requireLogin,async(req,res) => {
 
@@ -939,6 +976,16 @@ app.get('/view/seekers', requireLogin, catchAsync(async (req, res) => {
 
 }))
 
+app.get('/view/seekers_admin', requireLogin, catchAsync(async (req, res) => {
+
+
+    const dbo = seeker.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_seeker_admin', { users })
+
+}))
+
 app.get('/view/investors', requireLogin, catchAsync(async (req, res) => {
 
 
@@ -946,6 +993,16 @@ app.get('/view/investors', requireLogin, catchAsync(async (req, res) => {
     const users = await dbo
     console.log(users)
     res.render('users/view_investor', { users })
+
+}))
+
+app.get('/view/investors_admin', requireLogin, catchAsync(async (req, res) => {
+
+
+    const dbo = investor.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_investor_admin', { users })
 
 }))
 
@@ -959,6 +1016,16 @@ app.get('/view/job-providers', requireLogin, catchAsync(async (req, res) => {
 
 }))
 
+app.get('/view/job-providers_admin', requireLogin, catchAsync(async (req, res) => {
+
+
+    const dbo = job_provider_profiles.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_provider_admin', { users })
+
+}))
+
 app.get('/view/entrepreneurs', requireLogin, catchAsync(async (req, res) => {
 
 
@@ -968,11 +1035,40 @@ app.get('/view/entrepreneurs', requireLogin, catchAsync(async (req, res) => {
     res.render('users/index', { users })
 }))
 
+app.get('/view/entrepreneurs_admin', requireLogin, catchAsync(async (req, res) => {
+
+
+    const dbo = entrepreneur.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_entrepreneur_admin', { users })
+}))
+
 app.get('/secret',requireLogin,(req,res) => {
     
     //const {user}=req.params;
     res.render('users/secret',user);
 })
+
+
+// app.get('/editAdmin',requireLogin, catchAsync(async(req,res) =>{
+//     var x = req.session.user_id;
+//     const user = await admin.findOne({ session_id: x });
+//     console.log("Inside edit seeker")
+//     res.render('users/editseeker', { users: user })
+// }))
+
+// app.put('/editSeeker',requireLogin,catchAsync(async(req,res)=>{
+//     console.log(req.body)
+//     var x = req.session.user_id;
+//     const user = await seeker.findOneAndUpdate({ session_id: x },req.body, {runValidators:true,new:true});
+//     await user.save()
+//     req.session.user_id = user._id;
+//     console.log(user)
+//     res.render('users/profile_seeker', { users: user })
+// }))
+
+
 
 app.get('/editSeeker',requireLogin, catchAsync(async(req,res) =>{
     var x = req.session.user_id;
@@ -1045,6 +1141,10 @@ app.post('/editProvider', requireLogin, catchAsync(async (req, res) => {
     
 }))
 
+app.get('/c', (req,res) => {
+    res.render('users/Captcha_test')
+})
+
 app.all('*', (req,res,next) => {
     next(new ExpressError("Page not found",404))
 })
@@ -1053,6 +1153,19 @@ app.use((err,req,res,next) => {
     const {statusCode=500, message='Something went wrong'} = err;
     res.status(statusCode).send(message);
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(3000, ()=> {
     console.log("Application is runing on port 3000!")
