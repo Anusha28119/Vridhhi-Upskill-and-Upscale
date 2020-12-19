@@ -21,6 +21,7 @@
     "method-override": "^3.0.0",
     "mongoose": "^5.11.2",
     "node-captcha-generator": "0.0.1",
+    "nodemailer": "^6.4.17",
     "svg-captcha": "^1.4.0"
   }
 }

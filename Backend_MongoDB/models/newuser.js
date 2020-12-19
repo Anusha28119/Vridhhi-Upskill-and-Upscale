@@ -19,6 +19,10 @@ const newUserSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        confirmed: {
+            type: Boolean,
+            defaultValue: false,
+          },
         category: {
             type: String,
             required: true,
